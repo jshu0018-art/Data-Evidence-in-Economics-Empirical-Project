@@ -181,6 +181,7 @@ For Demographic and Health Survey (DHS) micro-level survey data:
 3. Download Individual Recode (IR) files in Stata (.dta) format
 4. Place downloaded files in `Data.raw/`
 5. These files are excluded from GitHub tracking via `.gitignore` (respects DHS data use agreements)
+6. Was not included in time due to processing of application approval for relevant country datasets  
 
 ### Troubleshooting Data Processing
 
