@@ -1,0 +1,83 @@
+# Quick Start Guide
+
+## For First-Time Users
+
+### 1. Clone the Repository
+```bash
+git clone <repository-url>
+cd Data-Evidence-in-Economics-Empirical-Project
+```
+
+### 2. Set Up Your Python Environment
+```bash
+# Create virtual environment
+python -m venv venv
+
+# Activate it:
+# Windows:
+venv\Scripts\activate
+# macOS/Linux:
+source venv/bin/activate
+
+# Verify Python and pip
+python --version
+pip --version
+```
+
+### 3. Install Dependencies
+```bash
+pip install -r requirements.txt
+```
+
+### 4. Run the Data Processing Pipeline
+The cleaned datasets already exist in `Data.clean/`, but to regenerate them from raw data:
+
+```bash
+# Clean Malawi data
+python Scripts/02_clean_wb_data.py
+
+# Extract and clean Rwanda and Burkina Faso data
+python Scripts/02_extract_rwanda_burkina_data.py
+python Scripts/04_clean_rwanda_data.py
+python Scripts/05_clean_burkina_faso_data.py
+```
+
+### 5. Verify Outputs
+Check that the following files exist in `Data.clean/`:
+- `Malawi_cleaned.csv`
+- `Rwanda_cleaned.csv`
+- `Burkina_Faso_cleaned.csv`
+
+## Troubleshooting
+
+| Issue | Solution |
+|-------|----------|
+| `ModuleNotFoundError: No module named 'pandas'` | Run `pip install -r requirements.txt` |
+| `FileNotFoundError: Data.raw/...` | Ensure you're running scripts from the project root directory |
+| `Permission denied` | Use `python` instead of `python.exe` on Windows |
+| Script runs but no output file | Check `Data.clean/` folder permissions |
+
+## Project Structure Explained
+
+```
+Data-Evidence-in-Economics-Empirical-Project/
+├── Data.raw/           ← Raw World Bank data (don't modify)
+├── Data.clean/         ← Cleaned, processed data (ready for analysis)
+├── Scripts/            ← Data processing Python scripts
+├── Outputs/            ← Analysis results (figures, tables)
+├── Docs/               ← Research documentation
+└── requirements.txt    ← Python dependencies
+```
+
+## Next Steps
+
+1. **Explore the cleaned data**: Open `Data.clean/*.csv` files to examine the data structure
+2. **Run analyses**: Use the cleaned datasets for statistical modeling and visualization
+3. **Add new scripts**: Follow the naming convention: `02_`, `03_`, `04_` for extraction/cleaning steps
+4. **Document findings**: Save results to `Outputs/figures/` and `Outputs/tables/`
+
+## For Questions or Issues
+
+- Check the main README.md for research context
+- Review script comments and docstrings
+- Verify you followed all setup steps above
