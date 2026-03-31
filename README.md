@@ -6,6 +6,8 @@
 What is the effect of increases in female secondary school enrolment on fertility rates in Malawi between
 2005–2025, compared with Sub-Saharan countries with declining or stagnating female enrolment?
 
+**Countries Analyzed:** Malawi (primary), Rwanda, Burkina Faso, Mali (comparison countries)
+
 Members: Scott (35101652) & Jethro (34932267)
 
 1. Repository Structure 
@@ -18,7 +20,7 @@ Data-Evidence-in-Economics-Empirical-Project/
 │   ├── requirements.txt                  # Python dependencies (exact versions)
 │   └── .gitignore                        # Files excluded from Git version control
 │
-├── 📊 Data Management
+├── 📊 Data Management (4 Countries)
 │   ├── Data.raw/                         # ⚠️ Raw data files (original, untouched - DO NOT MODIFY)
 │   │   ├── b43612c8-b13c-4b4e-89d2-2a8303a6a69e_Data.csv              # Malawi indicators
 │   │   ├── b43612c8-b13c-4b4e-89d2-2a8303a6a69e_Series - Metadata.csv # Malawi metadata
@@ -26,12 +28,15 @@ Data-Evidence-in-Economics-Empirical-Project/
 │   │   ├── 6ad77ab6-1f20-4bba-b9a4-eb918e568cf6_Series - Metadata.csv # Rwanda metadata
 │   │   ├── 9ec8500a-8dcf-47b3-9ac9-6c3a240f82d9_Data.csv              # Burkina Faso indicators
 │   │   ├── 9ec8500a-8dcf-47b3-9ac9-6c3a240f82d9_Series - Metadata.csv # Burkina Faso metadata
+│   │   ├── *Mali*Data.csv                                              # Mali indicators
+│   │   ├── *Mali*Series - Metadata.csv                                 # Mali metadata
 │   │   └── *.zip                                                        # Original ZIP archives
 │   │
 │   └── Data.clean/                       # ✅ Cleaned, analysis-ready datasets
 │       ├── Malawi_cleaned.csv            # Long format: Country, Year, Indicator, Value
 │       ├── Rwanda_cleaned.csv
-│       └── Burkina_Faso_cleaned.csv
+│       ├── Burkina_Faso_cleaned.csv
+│       └── mali_clean_data.csv           # Mali data (cleaned)
 │
 ├── 🔧 Processing Scripts
 │   └── Scripts/
@@ -39,12 +44,13 @@ Data-Evidence-in-Economics-Empirical-Project/
 │       ├── 02_clean_wb_data.py                  # Clean Malawi data → Data.clean/Malawi_cleaned.csv
 │       ├── 02_extract_rwanda_burkina_data.py    # Extract Rwanda & Burkina ZIP files
 │       ├── 04_clean_rwanda_data.py              # Clean Rwanda data → Data.clean/Rwanda_cleaned.csv
-│       └── 05_clean_burkina_faso_data.py        # Clean Burkina data → Data.clean/Burkina_Faso_cleaned.csv
+│       ├── 05_clean_burkina_faso_data.py        # Clean Burkina data → Data.clean/Burkina_Faso_cleaned.csv
+│       └── 06_clean_mali_data.py                # Clean Mali data → Data.clean/mali_clean_data.csv
 │
 ├── 📈 Analysis & Results
 │   └── Outputs/
-│       ├── figures/                      # Plots, visualizations, maps
-│       └── tables/                       # Regression tables, summary statistics
+│       ├── figures/                      # Plots, visualizations, maps, comparative analysis
+│       └── tables/                       # Regression tables, summary statistics (4 countries)
 │
 ├── 📚 Documentation
 │   └── Docs/
@@ -99,7 +105,7 @@ python -c "import pandas, wbgapi, statsmodels, matplotlib, seaborn; print('All p
 
 3. Data Acquisition and Processing
 
-The project analyzes World Bank indicators for **female secondary school enrollment** and **fertility rates** across three Sub-Saharan African countries: Malawi, Rwanda, and Burkina Faso (2005-2024).
+The project analyzes World Bank indicators for **female secondary school enrollment** and **fertility rates** across four Sub-Saharan African countries: Malawi (primary case), Rwanda, Burkina Faso, and Mali (comparison countries) for the period 2005-2024.
 
 ### Data Sources
 World Bank Open Data - World Development Indicators
@@ -114,6 +120,7 @@ World Bank Open Data - World Development Indicators
 | 2 | `02_extract_rwanda_burkina_data.py` | `Data.raw/*.zip` (Rwanda + Burkina) | Extracted CSVs in `Data.raw/` | Extract ZIP files containing Rwanda & Burkina data |
 | 3 | `04_clean_rwanda_data.py` | `Data.raw/*Rwanda*Data.csv` | `Data.clean/Rwanda_cleaned.csv` | Transform Rwanda data to long format |
 | 4 | `05_clean_burkina_faso_data.py` | `Data.raw/*Burkina*Data.csv` | `Data.clean/Burkina_Faso_cleaned.csv` | Transform Burkina Faso data to long format |
+| 5 | `06_clean_mali_data.py` | `Data.raw/*Mali*Data.csv` | `Data.clean/mali_clean_data.csv` | Transform Mali data to long format |
 
 ### Run the Complete Pipeline
 
@@ -131,9 +138,12 @@ python Scripts/04_clean_rwanda_data.py
 # Step 4: Clean Burkina Faso
 python Scripts/05_clean_burkina_faso_data.py
 
+# Step 5: Clean Mali
+python Scripts/06_clean_mali_data.py
+
 # Verify all output files exist
 ls Data.clean/
-# Should show: Malawi_cleaned.csv  Rwanda_cleaned.csv  Burkina_Faso_cleaned.csv
+# Should show: Malawi_cleaned.csv  Rwanda_cleaned.csv  Burkina_Faso_cleaned.csv  mali_clean_data.csv
 ```
 
 ### Data Format
@@ -230,8 +240,8 @@ python
 5. Project Status
 
 **Completed:**
-- ✅ World Bank data extracted for Malawi, Rwanda, and Burkina Faso
-- ✅ Data cleaning scripts for all three countries
+- ✅ World Bank data extracted for Malawi, Rwanda, Burkina Faso, and Mali
+- ✅ Data cleaning scripts for all four countries
 - ✅ Clean datasets ready for analysis in Data.clean/
 
 **In Progress:**
@@ -279,9 +289,12 @@ python
 | SP.DYN.TFRT.IN | Fertility rate, total (births per woman) | UN World Population Prospects |
 
 ### Countries Analyzed
-- 🇲🇼 **Malawi** - Primary case study
-- 🇷🇼 **Rwanda** - Comparative country (growing enrollment)
-- 🇧🇫 **Burkina Faso** - Comparative country (lower/stagnating enrollment)
+- 🇲🇼 **Malawi** - Primary case study (focus country for research question)
+- 🇷🇼 **Rwanda** - Comparative country (growing female enrollment, declining fertility)
+- 🇧🇫 **Burkina Faso** - Comparative country (lower/stagnating enrollment, high fertility)
+- 🇲🇱 **Mali** - Comparative country (declining enrollment trends, high fertility rates)
+
+**Data Coverage:** 2005-2024 for all four countries
 
 ---
 
