@@ -204,6 +204,12 @@ Fertility_Rate Trends by Country:
    (r = -0.659). The effect is consistent across all four countries, with Rwanda 
    showing the strongest within-country relationship (r = -0.980).
 
+8. RESIDUAL THINKING
+   - Rwanda’s near-perfect correlation (r = -0.980) results in minimal residuals, 
+     suggesting education is a primary driver
+   - Malawi and Mali's larger residuals suggest that external factors like regional 
+     instability play a more significant role.
+
 8. CONCLUSION AND NEXT STEPS
 ================================================================================
 
