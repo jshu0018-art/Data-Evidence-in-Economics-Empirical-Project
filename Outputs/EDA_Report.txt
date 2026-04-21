@@ -24,7 +24,7 @@ Code: Import libraries and read raw data
 - Libraries: pandas, numpy, matplotlib, seaborn
 - Data source: 4 CSV files from Data.clean/ directory
 - Files loaded: Burkina_Faso_cleaned.csv, Malawi_cleaned.csv, 
-               mali_clean_data.csv, Rwanda_cleaned.csv
+                mali_clean_data.csv, Rwanda_cleaned.csv
 
 
 2. INITIAL DATA OVERVIEW
@@ -36,7 +36,7 @@ Column Names and Types:
   Country Code: str (string/text, a three leter country code )
   Year: int64 (interger)
   Indicator: str (string/text, types of measurement)
-  Value: float64
+  Value: float64 (decimal number, actual numeric value of the Indicator)
 
 First 5 Rows:
   Country Name Country Code  Year                         Indicator     Value
@@ -97,6 +97,7 @@ Distribution Notes:
 - Female Secondary Enrollment Rate ranges from 10.95% to 53.32%
 - Fertility Rate ranges from 3.65 to 7.02 children per woman
 - Both indicators show reasonable variation across observations
+- Refer to temporal_trends.png to see time series graphs showing historical changes fertility rate and female secondary enrollment rate
 
 5. BIVARIATE / CORRELATION ANALYSIS
 ================================================================================
@@ -119,12 +120,7 @@ Interpretation:
 - All correlations are negative (inverse relationship)
 - As Female Secondary Enrollment increases, Fertility Rate decreases
 - This aligns with global research on education and fertility
-
-Simpson's Paradox:
-- Both the pooled and individual correlation across all countries are negative
-- Since both the aggregate and the subgroups show the same inverse relationship, 
-  the basic "reversal" required for the paradox is absent
-
+- Visual Representations of correlation matrix shown in Correlation_by_country.png and Correlation_matrix.png
 6. TEMPORAL TRENDS
 ================================================================================
 
@@ -164,6 +160,11 @@ Fertility_Rate Trends by Country:
     2000: 5.97 → 2023: 3.70
     Change: -2.27 (-38.0%) over 23 years
 
+Visual Representations of changes in data throughout the years:
+- See 'temporal_trends.png'
+- See 'univariate_boxplots.png'
+- See 'Univariate_distributions.png'
+
 7. KEY FINDINGS
 ================================================================================
 
@@ -199,16 +200,6 @@ Fertility_Rate Trends by Country:
    Countries converge toward higher enrollment rates (35-53%) while fertility 
    rates remain more dispersed (3.65-5.89), indicating different transition speeds.
 
-7. FIRST ORDER EFFECT
-   Higher female secondary enrollment is associated with lower fertility rates 
-   (r = -0.659). The effect is consistent across all four countries, with Rwanda 
-   showing the strongest within-country relationship (r = -0.980).
-
-8. RESIDUAL THINKING
-   - Rwanda’s near-perfect correlation (r = -0.980) results in minimal residuals, 
-     suggesting education is a primary driver
-   - Malawi and Mali's larger residuals suggest that external factors like regional 
-     instability play a more significant role.
 
 8. CONCLUSION AND NEXT STEPS
 ================================================================================
