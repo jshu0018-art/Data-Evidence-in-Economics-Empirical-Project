@@ -6,25 +6,25 @@ World Bank Gender and Development Indicators
 TITLE AND PURPOSE
 ================================================================================
 
-This EDA investigates the relationship between Female Secondary Enrollment Rate
+This EDA investigates the relationship between Female Secondary Enrollment 
 and Fertility Rate across four African countries (Burkina Faso, Malawi, Mali, 
 and Rwanda) from 2000-2024. 
 
-Research Questions:
+Research Questions to support Empirical Question:
 1. How have enrollment and fertility rates changed over time in each country?
-Followup Questions to strengthen research question:  
-1. What is the strength and nature of the relationship between these indicators?
-2. Are there country-level differences in these trends?
-3. What data quality issues exist in the dataset?
+2. What is the strength and nature of the relationship between these indicators?
+3. Are there country-level differences in these trends?
+4. What data quality issues exist in the dataset?
 
 
-1. DATA LOADING
+1. For Loading Data 
 ================================================================================
 
 Code: Import libraries and read raw data
 - Libraries: pandas, numpy, matplotlib, seaborn
 - Data source: 4 CSV files from Data.clean/ directory
-- Files loaded: Burkina_Faso_cleaned.csv, Malawi_cleaned.csv, mali_clean_data.csv, Rwanda_cleaned.csv
+- Files loaded: Burkina_Faso_cleaned.csv, Malawi_cleaned.csv, 
+               mali_clean_data.csv, Rwanda_cleaned.csv
 
 
 2. INITIAL DATA OVERVIEW
@@ -32,10 +32,10 @@ Code: Import libraries and read raw data
 Dataset Shape: 155 rows, 5 columns
 
 Column Names and Types:
-  Country Name: str
-  Country Code: str
-  Year: int64
-  Indicator: str
+  Country Name: str(string/text, the name of the country )
+  Country Code: str (string/text, a three leter country code )
+  Year: int64 (interger)
+  Indicator: str (string/text, types of measurement)
   Value: float64
 
 First 5 Rows:
@@ -53,7 +53,7 @@ Unique Values Summary:
   Years: 2000-2025
   Total observations: 155
 
-3. DATA CLEANING
+3. Cleaning the Data  
 ================================================================================
 Missing Values Before Cleaning:
   Value: 12 missing values
@@ -72,25 +72,25 @@ Data Quality Check:
 4. UNIVARIATE ANALYSIS
 ================================================================================
 
-Fertility_Rate:
-  Count: 73
-  Mean: 5.24
+Fertility_Rate using all dataset:
+  Count of valid observations: 73
+  Mean fertility rate: 5.24
   Std Dev: 1.02
-  Min: 3.65
+  Min: 3.65 (Currently Rwanda )
   Q1 (25%): 4.19
   Median (50%): 5.33
   Q3 (75%): 6.05
-  Max: 7.02
+  Max: 7.02 (Currently Mali) 
 
 Female_Secondary_Enrollment_Rate:
-  Count: 70
-  Mean: 31.34
+  Count of valid observations: 70
+  Mean fertility rate: 31.34 
   Std Dev: 10.32
-  Min: 10.95
+  Min: 10.95 (Currently Rwanda)
   Q1 (25%): 24.92
   Median (50%): 33.74
   Q3 (75%): 38.04
-  Max: 53.32
+  Max: 53.32 (Currently Rwanda)
 
 
 Distribution Notes:
@@ -108,7 +108,7 @@ Female_Secondary_Enrollment_Rate                          1.000000       -0.6588
 Fertility_Rate                                           -0.658871        1.000000
 
 
-Country-Specific Correlations: # no need to include image or correlation matrix just include the summary statistics 
+Country-Specific Correlations:
   Burkina Faso: r = -0.886 (n=16)
   Malawi: r = -0.848 (n=19)
   Mali: r = -0.882 (n=13)
