@@ -194,6 +194,10 @@ Fertility_Rate Trends by Country:
    Countries converge toward higher enrollment rates (35-53%) while fertility 
    rates remain more dispersed (3.65-5.89), indicating different transition speeds.
 
+7. FIRST ORDER EFFECT
+   Higher female secondary enrollment is associated with lower fertility rates 
+   (r = -0.659). The effect is consistent across all four countries, with Rwanda 
+   showing the strongest within-country relationship (r = -0.980).
 
 8. CONCLUSION AND NEXT STEPS
 ================================================================================
