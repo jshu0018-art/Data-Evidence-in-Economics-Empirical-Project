@@ -1,0 +1,250 @@
+================================================================================
+EXPLORATORY DATA ANALYSIS REPORT
+World Bank Gender and Development Indicators
+================================================================================
+
+TITLE AND PURPOSE
+================================================================================
+
+This EDA investigates the relationship between Female Secondary Enrollment Rate
+and Fertility Rate across four African countries (Burkina Faso, Malawi, Mali, 
+and Rwanda) from 2000-2024. 
+
+Research Questions:
+1. How have enrollment and fertility rates changed over time in each country?
+Followup Questions to strengthen research question:  
+1. What is the strength and nature of the relationship between these indicators?
+2. Are there country-level differences in these trends?
+3. What data quality issues exist in the dataset?
+
+
+1. DATA LOADING
+================================================================================
+
+Code: Import libraries and read raw data
+- Libraries: pandas, numpy, matplotlib, seaborn
+- Data source: 4 CSV files from Data.clean/ directory
+- Files loaded: Burkina_Faso_cleaned.csv, Malawi_cleaned.csv, mali_clean_data.csv, Rwanda_cleaned.csv
+
+
+2. INITIAL DATA OVERVIEW
+================================================================================
+Dataset Shape: 155 rows, 5 columns
+
+Column Names and Types:
+  Country Name: str
+  Country Code: str
+  Year: int64
+  Indicator: str
+  Value: float64
+
+First 5 Rows:
+  Country Name Country Code  Year                         Indicator     Value
+0       Rwanda          RWA  2000  Female_Secondary_Enrollment_Rate       NaN
+1       Rwanda          RWA  2000                    Fertility_Rate   5.96700
+2       Rwanda          RWA  2001  Female_Secondary_Enrollment_Rate  10.95496
+3       Rwanda          RWA  2001                    Fertility_Rate   5.89300
+4       Rwanda          RWA  2002  Female_Secondary_Enrollment_Rate  11.86879
+
+
+Unique Values Summary:
+  Countries: 4 (Burkina Faso, Malawi, Mali, Rwanda)
+  Indicators: 2 (Female_Secondary_Enrollment_Rate, Fertility_Rate)
+  Years: 2000-2025
+  Total observations: 155
+
+3. DATA CLEANING
+================================================================================
+Missing Values Before Cleaning:
+  Value: 12 missing values
+
+Data Type Conversion:
+  Converted "Value" column to numeric (coerced errors to NaN)
+  Rows before cleaning: 155
+  Rows after removing NaN values: 143
+  Rows removed: 12
+
+Data Quality Check:
+  [OK] Duplicates: 0 (none found)
+  [OK] All Value entries numeric: Yes
+  [OK] Final dataset for analysis: 143 observations
+
+4. UNIVARIATE ANALYSIS
+================================================================================
+
+Fertility_Rate:
+  Count: 73
+  Mean: 5.24
+  Std Dev: 1.02
+  Min: 3.65
+  Q1 (25%): 4.19
+  Median (50%): 5.33
+  Q3 (75%): 6.05
+  Max: 7.02
+
+Female_Secondary_Enrollment_Rate:
+  Count: 70
+  Mean: 31.34
+  Std Dev: 10.32
+  Min: 10.95
+  Q1 (25%): 24.92
+  Median (50%): 33.74
+  Q3 (75%): 38.04
+  Max: 53.32
+
+
+Distribution Notes:
+- Female Secondary Enrollment Rate ranges from 10.95% to 53.32%
+- Fertility Rate ranges from 3.65 to 7.02 children per woman
+- Both indicators show reasonable variation across observations
+
+5. BIVARIATE / CORRELATION ANALYSIS
+================================================================================
+
+Overall Correlation (All Countries):
+
+                                  Female_Secondary_Enrollment_Rate  Fertility_Rate
+Female_Secondary_Enrollment_Rate                          1.000000       -0.658871
+Fertility_Rate                                           -0.658871        1.000000
+
+
+Country-Specific Correlations: # no need to include image or correlation matrix just include the summary statistics 
+  Burkina Faso: r = -0.886 (n=16)
+  Malawi: r = -0.848 (n=19)
+  Mali: r = -0.882 (n=13)
+  Rwanda: r = -0.980 (n=19)
+
+
+Interpretation:
+- All correlations are negative (inverse relationship)
+- As Female Secondary Enrollment increases, Fertility Rate decreases
+- This aligns with global research on education and fertility
+
+6. TEMPORAL TRENDS
+================================================================================
+
+Female_Secondary_Enrollment_Rate Trends by Country:
+
+  Burkina Faso:
+    2005: 11.05 → 2024: 33.24
+    Change: +22.19 (+200.9%) over 19 years
+
+  Malawi:
+    2005: 24.86 → 2023: 37.26
+    Change: +12.40 (+49.9%) over 18 years
+
+  Mali:
+    2005: 17.67 → 2023: 37.13
+    Change: +19.46 (+110.2%) over 18 years
+
+  Rwanda:
+    2001: 10.95 → 2024: 53.32
+    Change: +42.37 (+386.8%) over 23 years
+
+Fertility_Rate Trends by Country:
+
+  Burkina Faso:
+    2005: 6.18 → 2023: 4.19
+    Change: -2.00 (-32.3%) over 18 years
+
+  Malawi:
+    2005: 5.85 → 2023: 3.65
+    Change: -2.20 (-37.6%) over 18 years
+
+  Mali:
+    2005: 7.02 → 2021: 5.89
+    Change: -1.14 (-16.2%) over 16 years
+
+  Rwanda:
+    2000: 5.97 → 2023: 3.70
+    Change: -2.27 (-38.0%) over 23 years
+
+7. KEY FINDINGS
+================================================================================
+
+1. STRONG INVERSE RELATIONSHIP
+   Female Secondary Enrollment and Fertility Rate show consistent negative 
+   correlation across all countries. As education increases, fertility decreases.
+
+2. RAPID EDUCATIONAL EXPANSION
+   All countries show dramatic increases in female secondary enrollment:
+   - Rwanda: +386.8% (2000-2023) - Most dramatic change
+   - Burkina Faso: +200.9% (2005-2024)
+   - Mali: +110.2% (2005-2023)
+   - Malawi: +49.9% (2005-2023)
+
+3. DECLINING FERTILITY RATES
+   All countries show declining fertility rates:
+   - Rwanda: -38.0% (2000-2023)
+   - Malawi: -37.6% (2005-2023)
+   - Burkina Faso: -32.3% (2005-2024)
+   - Mali: -16.2% (2005-2021) - Slowest decline
+
+4. RWANDA'S EXCEPTIONAL TRAJECTORY
+   Rwanda shows the most dramatic changes in both indicators. This likely 
+   reflects post-conflict development priorities and strong policy implementation.
+
+5. DATA QUALITY OBSERVATIONS
+   - Mali file has different column naming (Country_Name vs Country Name)
+   - File names don't match actual country data (data misalignment noted)
+   - 12 rows removed due to missing Value data
+   - Some missing fertility rate data in 2024 (reporting lags)
+
+6. CONVERGENCE PATTERNS
+   Countries converge toward higher enrollment rates (35-53%) while fertility 
+   rates remain more dispersed (3.65-5.89), indicating different transition speeds.
+
+
+8. CONCLUSION AND NEXT STEPS
+================================================================================
+
+SUMMARY
+The analysis confirms a strong negative relationship between female secondary 
+education enrollment and fertility rates across four African countries over 
+2000-2024. All countries show educational expansion and fertility decline, 
+indicating progress on gender equity and demographic transition.
+
+WHAT THE DATA SUGGESTS
+- Female education is consistently associated with lower fertility
+- Policy investments in education are having measurable demographic impacts
+- Post-conflict countries (Rwanda) can achieve rapid educational expansion
+- Demographic transitions in Sub-Saharan Africa are progressing at different speeds
+
+RECOMMENDATIONS FOR FURTHER ANALYSIS
+
+1. CAUSAL MODELING
+   - Conduct lag analysis to test temporal precedence
+   - Use VAR models to assess bidirectional relationships
+   - Control for confounding variables (GDP, health spending, urbanization)
+
+2. DECOMPOSITION ANALYSIS
+   - Separate composition effects from behavioral changes
+   - Analyze by education level (primary vs secondary enrollment)
+   - Compare urban vs rural patterns if data available
+
+3. PREDICTIVE MODELING
+   - Build ARIMA forecasts for 2025-2030
+   - Model scenarios under different policy assumptions
+   - Project SDG achievement timelines
+
+4. CONTEXTUAL INTEGRATION
+   - Include policy data (education budgets, family planning programs)
+   - Add economic indicators (GDP growth, employment rates)
+   - Analyze demographic pyramids and age structure
+
+5. DATA INFRASTRUCTURE IMPROVEMENTS
+   - Fix filename-to-data mapping inconsistencies
+   - Standardize column naming across all datasets
+   - Implement automated data validation
+   - Establish timely fertility rate reporting (2024 data missing)
+
+NEXT STEPS FOR MODELING
+- Prepare data for regression analysis
+- Test assumptions (normality, heteroscedasticity, autocorrelation)
+- Consider panel data models given country and time dimensions
+- Include country fixed effects to control for unobserved heterogeneity
+
+
+================================================================================
+END OF REPORT
+================================================================================

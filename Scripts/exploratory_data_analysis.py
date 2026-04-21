@@ -130,19 +130,33 @@ def plot_time_series(wide_df):
         plt.show()
 
 def plot_correlations(wide_df):
-    """Plot correlations between indicators."""
+    """Plot correlations between indicators by country."""
     indicators = [col for col in wide_df.columns if col not in ['Country', 'Year']]
 
     if len(indicators) < 2:
         print("Need at least 2 indicators for correlation analysis")
         return
 
-    # Overall correlation
-    plt.figure(figsize=(10, 8))
-    corr_matrix = wide_df[indicators].corr()
-    sns.heatmap(corr_matrix, annot=True, cmap='coolwarm', center=0,
-                square=True, linewidths=0.5)
-    plt.title('Correlation Matrix - All Countries', fontsize=16, fontweight='bold')
+    # Create subplots for correlations by country
+    countries = sorted(wide_df['Country'].unique())
+    num_countries = len(countries)
+    fig, axes = plt.subplots(2, 2, figsize=(14, 12))
+    axes = axes.flatten()
+
+    for idx, country in enumerate(countries):
+        country_data = wide_df[wide_df['Country'] == country][indicators].dropna()
+        if len(country_data) >= 2:
+            corr_matrix = country_data.corr()
+            sns.heatmap(corr_matrix, annot=True, cmap='coolwarm', center=0,
+                        square=True, linewidths=0.5, ax=axes[idx], vmin=-1, vmax=1,
+                        cbar_kws={'label': 'Correlation'})
+            axes[idx].set_title(f'{country}', fontsize=12, fontweight='bold')
+        else:
+            axes[idx].text(0.5, 0.5, f'Insufficient data\nfor {country}',
+                          ha='center', va='center', transform=axes[idx].transAxes)
+            axes[idx].set_title(f'{country}', fontsize=12, fontweight='bold')
+
+    fig.suptitle('Correlation Matrix by Country', fontsize=16, fontweight='bold', y=0.995)
     plt.tight_layout()
     plt.savefig(OUTPUT_DIR / 'correlation_matrix.png', dpi=300, bbox_inches='tight')
     plt.show()
@@ -170,40 +184,57 @@ def plot_correlations(wide_df):
             plt.show()
 
 def plot_country_comparisons(wide_df):
-    """Create bar plots comparing countries for recent years."""
+    """Create bar plots comparing countries using most recent data available for each country."""
     indicators = [col for col in wide_df.columns if col not in ['Country', 'Year']]
 
-    # Get most recent year with data
-    recent_year = wide_df['Year'].max()
-    recent_data = wide_df[wide_df['Year'] == recent_year]
-
     for indicator in indicators:
-        plt.figure(figsize=(10, 6))
+        plt.figure(figsize=(12, 6))
 
-        # Filter out NaN values
-        plot_data = recent_data.dropna(subset=[indicator])
+        # Get most recent data for each country (may be different years)
+        countries = sorted(wide_df['Country'].unique())
+        plot_data = []
+        years = []
 
-        if len(plot_data) > 0:
-            bars = plt.bar(plot_data['Country'], plot_data[indicator])
+        for country in countries:
+            country_data = wide_df[wide_df['Country'] == country].dropna(subset=[indicator])
+            if len(country_data) > 0:
+                # Get the most recent row for this country
+                latest = country_data.iloc[-1]
+                plot_data.append(latest[indicator])
+                years.append(int(latest['Year']))
+            else:
+                plot_data.append(np.nan)
+                years.append(None)
 
-            plt.title(f'{indicator.replace("_", " ")} by Country ({recent_year})',
+        # Create bar plot
+        valid_countries = [c for c, v in zip(countries, plot_data) if not pd.isna(v)]
+        valid_values = [v for v in plot_data if not pd.isna(v)]
+        valid_years = [y for y in years if y is not None]
+
+        if len(valid_countries) > 0:
+            bars = plt.bar(valid_countries, valid_values, color='steelblue')
+
+            # Create title with year information
+            year_info = f"(Most recent data: {min(valid_years)}-{max(valid_years)})"
+            plt.title(f'{indicator.replace("_", " ")} by Country {year_info}',
                      fontsize=14, fontweight='bold')
             plt.xlabel('Country', fontsize=12)
             plt.ylabel(indicator.replace("_", " "), fontsize=12)
             plt.xticks(rotation=45, ha='right')
 
-            # Add value labels on bars
-            for bar in bars:
+            # Add value labels on bars with year info
+            for i, (bar, country) in enumerate(zip(bars, valid_countries)):
                 height = bar.get_height()
+                year_text = f"\n({valid_years[i]})" if valid_years else ""
                 plt.text(bar.get_x() + bar.get_width()/2., height,
-                        f'{height:.1f}', ha='center', va='bottom')
+                        f'{height:.1f}{year_text}', ha='center', va='bottom', fontsize=9)
 
             plt.tight_layout()
-            filename = f"{indicator.lower()}_by_country_{recent_year}.png"
+            filename = f"{indicator.lower()}_by_country_comparison.png"
             plt.savefig(OUTPUT_DIR / filename, dpi=300, bbox_inches='tight')
             plt.show()
         else:
-            print(f"No data for {indicator} in {recent_year}")
+            print(f"No data available for {indicator}")
 
 def analyze_trends(wide_df):
     """Analyze trends and changes over time."""

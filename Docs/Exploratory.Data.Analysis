@@ -1,4 +1,4 @@
-Title and purpose
+Title and purpose  (FIX THE EDA SCRIPT)
 State the dataset, the question, and what the EDA is trying to uncover.
 
 Data loading
@@ -6,6 +6,7 @@ Show the code that imports libraries and reads the raw data.
 
 Initial data overview
 Include dataset shape, column names, variable types, and a few sample rows.
+
 
 Data cleaning
 Show code for missing values, duplicates, type fixes, recoding, or filtering, then explain what changed and why.
