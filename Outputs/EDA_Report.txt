@@ -120,6 +120,11 @@ Interpretation:
 - As Female Secondary Enrollment increases, Fertility Rate decreases
 - This aligns with global research on education and fertility
 
+Simpson's Paradox:
+- Both the pooled and individual correlation across all countries are negative
+- Since both the aggregate and the subgroups show the same inverse relationship, 
+  the basic "reversal" required for the paradox is absent
+
 6. TEMPORAL TRENDS
 ================================================================================
 
