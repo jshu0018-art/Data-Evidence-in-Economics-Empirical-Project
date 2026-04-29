@@ -6,98 +6,97 @@ World Bank Gender and Development Indicators
 TITLE AND PURPOSE
 ================================================================================
 
-This EDA investigates the relationship between Female Secondary Enrollment 
+This EDA investigates the relationship between Female Secondary Enrollment Rate
 and Fertility Rate across four African countries (Burkina Faso, Malawi, Mali, 
 and Rwanda) from 2000-2024. 
 
-Research Questions to support Empirical Question:
+Research Questions:
 1. How have enrollment and fertility rates changed over time in each country?
 2. What is the strength and nature of the relationship between these indicators?
 3. Are there country-level differences in these trends?
 4. What data quality issues exist in the dataset?
 
 
-1. For Loading Data 
+1. DATA LOADING
 ================================================================================
 
 Code: Import libraries and read raw data
 - Libraries: pandas, numpy, matplotlib, seaborn
 - Data source: 4 CSV files from Data.clean/ directory
 - Files loaded: Burkina_Faso_cleaned.csv, Malawi_cleaned.csv, 
-                mali_clean_data.csv, Rwanda_cleaned.csv
+               Mali_cleaned.csv, Rwanda_cleaned.csv
 
 
 2. INITIAL DATA OVERVIEW
 ================================================================================
-Dataset Shape: 155 rows, 5 columns
+Dataset Shape: 136 rows, 5 columns
 
 Column Names and Types:
-  Country Name: str(string/text, the name of the country )
-  Country Code: str (string/text, a three leter country code )
-  Year: int64 (interger)
-  Indicator: str (string/text, types of measurement)
-  Value: float64 (decimal number, actual numeric value of the Indicator)
+  Country Name: str
+  Country Code: str
+  Year: int64
+  Indicator: str
+  Value: float64
 
 First 5 Rows:
-  Country Name Country Code  Year                         Indicator     Value
-0       Rwanda          RWA  2000  Female_Secondary_Enrollment_Rate       NaN
-1       Rwanda          RWA  2000                    Fertility_Rate   5.96700
-2       Rwanda          RWA  2001  Female_Secondary_Enrollment_Rate  10.95496
-3       Rwanda          RWA  2001                    Fertility_Rate   5.89300
-4       Rwanda          RWA  2002  Female_Secondary_Enrollment_Rate  11.86879
+   Country Name Country Code  Year                         Indicator     Value
+0  Burkina Faso          BFA  2005  Female_Secondary_Enrollment_Rate  11.04549
+1  Burkina Faso          BFA  2005                    Fertility_Rate   6.18200
+2  Burkina Faso          BFA  2006  Female_Secondary_Enrollment_Rate  11.84422
+3  Burkina Faso          BFA  2006                    Fertility_Rate   6.17000
+4  Burkina Faso          BFA  2007  Female_Secondary_Enrollment_Rate  12.86912
 
 
 Unique Values Summary:
   Countries: 4 (Burkina Faso, Malawi, Mali, Rwanda)
   Indicators: 2 (Female_Secondary_Enrollment_Rate, Fertility_Rate)
-  Years: 2000-2025
-  Total observations: 155
+  Years: 1990-2025
+  Total observations: 136
 
-3. Cleaning the Data  
+3. DATA CLEANING
 ================================================================================
 Missing Values Before Cleaning:
-  Value: 12 missing values
+  Value: 14 missing values
 
 Data Type Conversion:
   Converted "Value" column to numeric (coerced errors to NaN)
-  Rows before cleaning: 155
-  Rows after removing NaN values: 143
-  Rows removed: 12
+  Rows before cleaning: 136
+  Rows after removing NaN values: 122
+  Rows removed: 14
 
 Data Quality Check:
   [OK] Duplicates: 0 (none found)
   [OK] All Value entries numeric: Yes
-  [OK] Final dataset for analysis: 143 observations
+  [OK] Final dataset for analysis: 122 observations
 
 4. UNIVARIATE ANALYSIS
 ================================================================================
 
-Fertility_Rate using all dataset:
-  Count of valid observations: 73
-  Mean fertility rate: 5.24
-  Std Dev: 1.02
-  Min: 3.65 (Currently Rwanda )
-  Q1 (25%): 4.19
-  Median (50%): 5.33
-  Q3 (75%): 6.05
-  Max: 7.02 (Currently Mali) 
-
 Female_Secondary_Enrollment_Rate:
-  Count of valid observations: 70
-  Mean fertility rate: 31.34 
-  Std Dev: 10.32
-  Min: 10.95 (Currently Rwanda)
-  Q1 (25%): 24.92
+  Count: 56
+  Mean: 31.76
+  Std Dev: 11.08
+  Min: 10.95
+  Q1 (25%): 25.06
   Median (50%): 33.74
-  Q3 (75%): 38.04
-  Max: 53.32 (Currently Rwanda)
+  Q3 (75%): 39.93
+  Max: 53.32
+
+Fertility_Rate:
+  Count: 66
+  Mean: 5.04
+  Std Dev: 0.91
+  Min: 3.65
+  Q1 (25%): 4.12
+  Median (50%): 5.16
+  Q3 (75%): 5.79
+  Max: 7.31
 
 
 Distribution Notes:
 - Female Secondary Enrollment Rate ranges from 10.95% to 53.32%
 - Fertility Rate ranges from 3.65 to 7.02 children per woman
 - Both indicators show reasonable variation across observations
-- Refer to temporal_trends.png to see time series graphs showing historical changes fertility rate and female secondary enrollment rate
 
 5. BIVARIATE / CORRELATION ANALYSIS
 ================================================================================
@@ -105,14 +104,13 @@ Distribution Notes:
 Overall Correlation (All Countries):
 
                                   Female_Secondary_Enrollment_Rate  Fertility_Rate
-Female_Secondary_Enrollment_Rate                          1.000000       -0.658871
-Fertility_Rate                                           -0.658871        1.000000
+Female_Secondary_Enrollment_Rate                          1.000000       -0.846941
+Fertility_Rate                                           -0.846941        1.000000
 
 
 Country-Specific Correlations:
   Burkina Faso: r = -0.886 (n=16)
   Malawi: r = -0.848 (n=19)
-  Mali: r = -0.882 (n=13)
   Rwanda: r = -0.980 (n=19)
 
 
@@ -120,7 +118,7 @@ Interpretation:
 - All correlations are negative (inverse relationship)
 - As Female Secondary Enrollment increases, Fertility Rate decreases
 - This aligns with global research on education and fertility
-- Visual Representations of correlation matrix shown in Correlation_by_country.png and Correlation_matrix.png
+
 6. TEMPORAL TRENDS
 ================================================================================
 
@@ -133,10 +131,6 @@ Female_Secondary_Enrollment_Rate Trends by Country:
   Malawi:
     2005: 24.86 → 2023: 37.26
     Change: +12.40 (+49.9%) over 18 years
-
-  Mali:
-    2005: 17.67 → 2023: 37.13
-    Change: +19.46 (+110.2%) over 18 years
 
   Rwanda:
     2001: 10.95 → 2024: 53.32
@@ -153,17 +147,12 @@ Fertility_Rate Trends by Country:
     Change: -2.20 (-37.6%) over 18 years
 
   Mali:
-    2005: 7.02 → 2021: 5.89
-    Change: -1.14 (-16.2%) over 16 years
+    1990: 7.31 → 2023: 5.61
+    Change: -1.70 (-23.2%) over 33 years
 
   Rwanda:
     2000: 5.97 → 2023: 3.70
     Change: -2.27 (-38.0%) over 23 years
-
-Visual Representations of changes in data throughout the years:
-- See 'temporal_trends.png'
-- See 'univariate_boxplots.png'
-- See 'Univariate_distributions.png'
 
 7. KEY FINDINGS
 ================================================================================

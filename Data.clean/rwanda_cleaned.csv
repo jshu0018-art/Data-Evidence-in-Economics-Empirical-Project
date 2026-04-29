@@ -1,37 +1,47 @@
 Country Name,Country Code,Year,Indicator,Value
-Burkina Faso,BFA,2005,Female_Secondary_Enrollment_Rate,11.0454902648926
-Burkina Faso,BFA,2005,Fertility_Rate,6.182
-Burkina Faso,BFA,2006,Female_Secondary_Enrollment_Rate,11.844220161438
-Burkina Faso,BFA,2006,Fertility_Rate,6.17
-Burkina Faso,BFA,2007,Female_Secondary_Enrollment_Rate,12.869119644165
-Burkina Faso,BFA,2007,Fertility_Rate,6.11
-Burkina Faso,BFA,2008,Female_Secondary_Enrollment_Rate,15.2496795654297
-Burkina Faso,BFA,2008,Fertility_Rate,6.05
-Burkina Faso,BFA,2012,Female_Secondary_Enrollment_Rate,22.4369517647316
-Burkina Faso,BFA,2012,Fertility_Rate,5.793
-Burkina Faso,BFA,2013,Female_Secondary_Enrollment_Rate,25.1246647585712
-Burkina Faso,BFA,2013,Fertility_Rate,5.697
-Burkina Faso,BFA,2014,Female_Secondary_Enrollment_Rate,27.3772509415436
-Burkina Faso,BFA,2014,Fertility_Rate,5.595
-Burkina Faso,BFA,2015,Female_Secondary_Enrollment_Rate,31.3499100869596
-Burkina Faso,BFA,2015,Fertility_Rate,5.478
-Burkina Faso,BFA,2016,Female_Secondary_Enrollment_Rate,33.8377858408122
-Burkina Faso,BFA,2016,Fertility_Rate,5.331
-Burkina Faso,BFA,2017,Female_Secondary_Enrollment_Rate,36.4337512769058
-Burkina Faso,BFA,2017,Fertility_Rate,5.17
-Burkina Faso,BFA,2018,Female_Secondary_Enrollment_Rate,39.4315297671845
-Burkina Faso,BFA,2018,Fertility_Rate,4.921
-Burkina Faso,BFA,2019,Female_Secondary_Enrollment_Rate,40.517531621348
-Burkina Faso,BFA,2019,Fertility_Rate,4.681
-Burkina Faso,BFA,2020,Female_Secondary_Enrollment_Rate,40.2090461523707
-Burkina Faso,BFA,2020,Fertility_Rate,4.44
-Burkina Faso,BFA,2021,Female_Secondary_Enrollment_Rate,40.1334643135395
-Burkina Faso,BFA,2021,Fertility_Rate,4.361
-Burkina Faso,BFA,2022,Female_Secondary_Enrollment_Rate,36.1300743115017
-Burkina Faso,BFA,2022,Fertility_Rate,4.275
-Burkina Faso,BFA,2023,Female_Secondary_Enrollment_Rate,33.6455886002101
-Burkina Faso,BFA,2023,Fertility_Rate,4.186
-Burkina Faso,BFA,2024,Female_Secondary_Enrollment_Rate,33.2389182465594
-Burkina Faso,BFA,2024,Fertility_Rate,
-Burkina Faso,BFA,2025,Female_Secondary_Enrollment_Rate,
-Burkina Faso,BFA,2025,Fertility_Rate,
+Rwanda,RWA,2000,Female_Secondary_Enrollment_Rate,
+Rwanda,RWA,2000,Fertility_Rate,5.967
+Rwanda,RWA,2001,Female_Secondary_Enrollment_Rate,10.9549598693848
+Rwanda,RWA,2001,Fertility_Rate,5.893
+Rwanda,RWA,2002,Female_Secondary_Enrollment_Rate,11.8687896728516
+Rwanda,RWA,2002,Fertility_Rate,5.816
+Rwanda,RWA,2003,Female_Secondary_Enrollment_Rate,12.6320600509644
+Rwanda,RWA,2003,Fertility_Rate,5.737
+Rwanda,RWA,2004,Female_Secondary_Enrollment_Rate,14.3239402770996
+Rwanda,RWA,2004,Fertility_Rate,5.64
+Rwanda,RWA,2005,Female_Secondary_Enrollment_Rate,15.2659702301025
+Rwanda,RWA,2005,Fertility_Rate,5.5
+Rwanda,RWA,2006,Female_Secondary_Enrollment_Rate,17.0705509185791
+Rwanda,RWA,2006,Fertility_Rate,5.335
+Rwanda,RWA,2007,Female_Secondary_Enrollment_Rate,19.0499095916748
+Rwanda,RWA,2007,Fertility_Rate,5.141
+Rwanda,RWA,2008,Female_Secondary_Enrollment_Rate,20.7554893493652
+Rwanda,RWA,2008,Fertility_Rate,4.922
+Rwanda,RWA,2012,Female_Secondary_Enrollment_Rate,40.8421783447266
+Rwanda,RWA,2012,Fertility_Rate,4.201
+Rwanda,RWA,2013,Female_Secondary_Enrollment_Rate,31.6404940535794
+Rwanda,RWA,2013,Fertility_Rate,4.136
+Rwanda,RWA,2014,Female_Secondary_Enrollment_Rate,43.2179310615644
+Rwanda,RWA,2014,Fertility_Rate,4.117
+Rwanda,RWA,2015,Female_Secondary_Enrollment_Rate,40.5258619158058
+Rwanda,RWA,2015,Fertility_Rate,4.108
+Rwanda,RWA,2016,Female_Secondary_Enrollment_Rate,39.8630035289782
+Rwanda,RWA,2016,Fertility_Rate,4.106
+Rwanda,RWA,2017,Female_Secondary_Enrollment_Rate,41.5758285639592
+Rwanda,RWA,2017,Fertility_Rate,4.084
+Rwanda,RWA,2018,Female_Secondary_Enrollment_Rate,43.2482338226061
+Rwanda,RWA,2018,Fertility_Rate,4.047
+Rwanda,RWA,2019,Female_Secondary_Enrollment_Rate,46.5223774240521
+Rwanda,RWA,2019,Fertility_Rate,3.985
+Rwanda,RWA,2020,Female_Secondary_Enrollment_Rate,
+Rwanda,RWA,2020,Fertility_Rate,3.913
+Rwanda,RWA,2021,Female_Secondary_Enrollment_Rate,47.0146410981496
+Rwanda,RWA,2021,Fertility_Rate,3.841
+Rwanda,RWA,2022,Female_Secondary_Enrollment_Rate,47.5004278023246
+Rwanda,RWA,2022,Fertility_Rate,3.778
+Rwanda,RWA,2023,Female_Secondary_Enrollment_Rate,48.7785157251447
+Rwanda,RWA,2023,Fertility_Rate,3.698
+Rwanda,RWA,2024,Female_Secondary_Enrollment_Rate,53.3234802182678
+Rwanda,RWA,2024,Fertility_Rate,
+Rwanda,RWA,2025,Female_Secondary_Enrollment_Rate,
+Rwanda,RWA,2025,Fertility_Rate,
