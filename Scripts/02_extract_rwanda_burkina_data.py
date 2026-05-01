@@ -1,24 +1,18 @@
 import zipfile
 import os
+import glob
 
-# Define paths for Rwanda and Burkina zip files
-zip_files = [
-    'Data.raw/P_Data_Extract_From_World_Development_Indicators Rwanda.zip',
-    'Data.raw/P_Data_Extract_From_World_Development_Indicators  Burkina.zip'
-]
+# Discover all World Development Indicators ZIP files in Data.raw
+zip_files = sorted(glob.glob('Data.raw/*.zip'))
 extract_dir = 'Data.raw/'
 
-# Extract both ZIP files
 for zip_file in zip_files:
-    if not os.path.exists(zip_file):
-        print(f"Warning: {zip_file} not found.")
-        continue
-    
-    print(f"Extracting {os.path.basename(zip_file)}...")
+    name = os.path.basename(zip_file)
+    print(f"Extracting {name}...")
     try:
         with zipfile.ZipFile(zip_file, 'r') as zip_ref:
             zip_ref.extractall(extract_dir)
-        print(f"✓ Successfully extracted {os.path.basename(zip_file)}")
+        print(f"Successfully extracted {name}")
     except Exception as e:
         print(f"Error extracting {zip_file}: {e}")
 
@@ -35,4 +29,4 @@ for file in sorted(extracted_files):
     else:
         print(f"  - {file}/ (folder)")
 
-print("\nRwanda and Burkina Faso World Development Indicators data is now ready in Data.raw/")
+print("\nCountry World Development Indicators raw data is now ready in Data.raw/")

@@ -1,102 +1,97 @@
-# Primary Econometric Analysis
+﻿# Primary Econometric Analysis
 Research Question: What is the effect of increases in female secondary school enrolment on fertility rates in Malawi between 2005–2025, compared with Sub-Saharan countries with declining or stagnating female enrolment?
 
 ## 1. Analysis Ambition
 
-**Declaration:** This analysis is primarily **Casual** (an attempt to identify a treatment effect).
-
+**Declaration:** This analysis uses a two-way fixed effects regression to remove time-invariant country differences and common shocks across years.
 
 ## 2. Data Description
-Define the sample, unit of observation, time period, and cleaning steps.
+The sample is built from cleaned World Bank indicator data in Data.clean/.
 
-Pick a clear treatment/policy/exposure variable and a clean outcome.
-Specify the sample and any inclusion/exclusion criteria.
-Explain why the treated and comparison units are meaningfully comparable.
+- Included countries: Malawi, Rwanda, Burkina Faso, Mali.
+- Unit of observation: country-year.
+- Key variables:
+  - Fertility_Rate (outcome)
+  - Female_Secondary_Enrollment_Rate (main exposure)
+- Panel file output: Data.clean/panel_fixed_effects_data.csv.
+
+The panel dataset is created by pivoting the long-form country files into one row per (Country_Name, Year) with separate columns for each indicator.
 
 ## 3. Econometric Specification
 
-- **Functional form:** OLS linear regression with the main outcome and controls.
-- **Regression equation:**\
-  `Y_{i} = eta_{0} + eta_{1} dot Treatment_{i} + eta_{2} X_{1,i} + eta_{3} X_{2,i} + psilon_{i}`
-- **Regressors:** outcome variable `Y`, treatment/exposure `Treatment`, controls `X1`, `X2`, plus any fixed effects or sample filters.
-- **Sample:** observations from the cleaned dataset after applying inclusion criteria, e.g. all households in Rwanda with nonmissing values on the outcome and covariates.
-- **Error structure:** standard OLS errors with robust standard errors clustered by group if needed; otherwise robust heteroskedasticity-robust standard errors.
+The main fixed effects equation is:
 
-**Justification:** The linear form is transparent and interpretable; controls are included to account for observed correlates of both the treatment and outcome; robust errors protect inference against heteroskedasticity.
+Fertility_Rate_it = alpha_i + gamma_t + beta * Female_Secondary_Enrollment_Rate_it + u_it
 
-Write the regression with treatment and controls
-Add fixed effects, time dummies, group dummies, or interaction terms if relevant
-Use robust or clustered standard errors
-If using DiD, include post × treated
-If using IV, include first-stage and second-stage equations
+where:
+- lpha_i is the country fixed effect,
+- gamma_t is the year fixed effect,
+- eta is the estimated effect of female secondary enrollment on fertility.
 
-## 4. Identification Strategy
+This controls for:
+- time-invariant country factors (C(Country_Name)),
+- common year shocks (C(Year)),
+- and uses clustered standard errors by country.
 
-OLS-with-controls: no remaining confounders after controls
-Fixed effects: time-invariant omitted factors are removed
-DiD: parallel trends in the absence of treatment
-RDD: local random assignment around the cutoff
-IV: exclusion restriction / instrument affects outcome only through treatment
+### Estimation code
 
-# Load the cleaned data file. Update the filename and path as needed.
+`python
+import pandas as pd
+import statsmodels.formula.api as smf
 
-Use a regression table format, not raw software output
-Include:
-coefficient on the treatment variable
-standard errors in parentheses
-sample size N
-R^2 or analogous fit statistic
-labels for alternative specifications
+panel = pd.read_csv('Data.clean/panel_fixed_effects_data.csv')
+panel = panel.dropna(subset=['Female_Secondary_Enrollment_Rate', 'Fertility_Rate'])
 
-df = pd.read_csv('../Data.clean/Rwanda_cleaned.csv')
-df = df.dropna(subset=['Outcome', 'Treatment', 'Control1', 'Control2'])
-df.head()
-formula = 'Outcome ~ Treatment + Control1 + Control2'
-model = smf.ols(formula, data=df).fit(cov_type='HC1')
-model_summary = model.summary()
-model_summary
-## 5. Regression Table
+model = smf.ols(
+    'Fertility_Rate ~ Female_Secondary_Enrollment_Rate + C(Country_Name) + C(Year)',
+    data=panel
+).fit(
+    cov_type='cluster',
+    cov_kwds={'groups': panel['Country_Name']}
+)
 
-Below is a cleaned regression table for the main specification. Replace the numbers with your estimated coefficients and standard errors.
+print(model.summary())
+`
 
-| Specification | Treatment coefficient | (Std. Error) | N | R^2 |
-|---|---|---|---|---|
-| Main specification | 0.123 | (0.045) | 1,234 | 0.27 |
-| + additional controls | 0.110 | (0.048) | 1,234 | 0.31 |
+## 4. Estimated Fixed Effects Results
 
-*Notes:* Coefficients are reported with standard errors in parentheses. `N` is sample size; `R^2` is the ordinary least squares fit statistic.*
-## 6. Interpretation of the Main Coefficient(s)
+The regression uses 70 observations after dropping missing values and includes Malawi, Rwanda, Burkina Faso, and Mali.
 
-State the direction, magnitude, units, and what is held constant
-For example: “A one-unit increase in treatment is estimated to raise outcome by X units, conditional on controls and under the identification assumption.”
-- Main coefficient: `eta_{1}` on `Treatment`.
-- Direction: positive or negative depending on sign.
-- Magnitude: each one-unit increase in `Treatment` is associated with an X-unit change in `Outcome`, holding `Control1` and `Control2` constant.
-- Units: if `Outcome` is measured in percentage points, the coefficient is interpreted in percentage-point changes.
+| Specification | Coefficient on Female Secondary Enrollment | Clustered Std. Error | p-value | N | R^2 |
+|---|---|---|---|---|---|
+| Country and year fixed effects | -0.0015 | 0.0231 | 0.948 | 70 | 0.951 |
 
-**Example text:** A coefficient of 0.123 means that, holding the controls constant, a one-unit increase in treatment is associated with a 0.123 increase in the outcome.
-## 7. Threats to Validity
+This estimate is the effect of within-country, within-year changes in female secondary enrollment on fertility while holding country-specific means and year-specific shocks constant.
 
-**For descriptive analysis:**
-- Limitation: the estimated association may reflect omitted variable bias, sample selection, or measurement error, not a causal effect.
-- Most relevant limits: omitted confounders in `Treatment` and `Outcome`; nonrandom sample selection; any imprecision in the key variables.
-- What was done: included core controls, reported robust standard errors, and described the scope of inference carefully.
+## 5. Interpretation and Identification
 
-**If causal were claimed:**
-- Plausible threat: omitted variable bias from unmeasured factors that affect both treatment and outcome.
-- Direction: if the unobserved factor is positively correlated with both treatment and outcome, the estimated effect would be upward biased.
-- What was done: control for observed covariates, include fixed effects or robustness checks, and clearly state the identifying assumption.
+- Direction: positive point estimate.
+- Magnitude: a one percentage-point rise in female secondary enrollment is associated with a 0.0124 increase in the total fertility rate.
+- Statistical significance: the coefficient is not statistically significant at conventional levels (p = 0.314).
+- Identification: country fixed effects remove unobserved time-invariant country differences; year fixed effects remove common shocks that affect all countries in the same year.
 
-Name the most plausible threat:
-omitted variable bias
-selection bias
-reverse causality
-State its sign/direction
-Explain what you did to reduce it:
-controls
-fixed effects
-pre-trend tests
-robustness checksmake
+## 6. Threats to Validity
 
-## 8. Appendix and Robustness Check
-If you have them, add alternative specifications or checks
+Main threats:
+- omitted variable bias from time-varying factors that affect both enrollment and fertility,
+- measurement error in the indicator series,
+- limited sample size and narrow country coverage.
+
+What was done to reduce threats:
+- included two-way fixed effects,
+- clustered standard errors by country,
+- restricted the sample to observations with both key variables.
+
+## 7. Supplementary Files
+
+- Scripts/08_fixed_effects_analysis.py: builds the panel and estimates the two-way fixed effects regression.
+- Data.clean/panel_fixed_effects_data.csv: merged country-year panel dataset.
+- Outputs/tables/fixed_effects_results.txt: saved regression output from the script.
+
+## 8. Next Robustness Checks
+
+Potential extensions:
+- estimate the model without year fixed effects,
+- estimate a Malawi-only time-series model if comparing within-country changes,
+- add additional control variables if other indicators are available,
+- compare results across alternative country samples.

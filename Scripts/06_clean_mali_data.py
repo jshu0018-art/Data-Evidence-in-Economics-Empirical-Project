@@ -29,22 +29,29 @@ import pandas as pd
 import os
 
 # Define file paths (relative to project root)
-raw_data_path = 'Data.raw/*Mali*Data.csv'
-clean_data_path = 'Data.clean/mali_clean_data.csv'
+raw_data_pattern = 'Data.raw/*_Data.csv'
+clean_data_path = 'Data.clean/Mali_cleaned.csv'
 
-# Find Mali data file
+# Find the Mali raw data file by content, not by file name.
 import glob
-mali_files = glob.glob(raw_data_path)
+raw_files = glob.glob(raw_data_pattern)
+raw_data_path = None
+for candidate in raw_files:
+    try:
+        df_test = pd.read_csv(candidate, nrows=10)
+        if 'Country Name' in df_test.columns and df_test['Country Name'].astype(str).str.contains('Mali', case=False, na=False).any():
+            raw_data_path = candidate
+            break
+    except Exception:
+        continue
 
-if not mali_files:
-    print(f"Error: No Mali data file found matching pattern '{raw_data_path}'")
-    print("Available files in Data.raw/:")
-    for f in os.listdir('Data.raw/'):
-        if f.endswith('.csv'):
-            print(f"  - {f}")
+if raw_data_path is None:
+    print(f"Error: No Mali raw data file found matching pattern '{raw_data_pattern}'")
+    print("Available candidate files in Data.raw/:")
+    for f in raw_files:
+        print(f"  - {f}")
     exit(1)
 
-raw_data_path = mali_files[0]
 print(f"Using Mali data file: {raw_data_path}")
 
 # Ensure Data.clean directory exists
