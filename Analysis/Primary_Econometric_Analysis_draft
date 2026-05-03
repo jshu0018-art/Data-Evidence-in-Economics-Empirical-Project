@@ -3,7 +3,9 @@ Research Question: What is the effect of increases in female secondary school en
 
 ## 1. Analysis Ambition
 
-**Declaration:** This analysis uses a two-way fixed effects regression to remove time-invariant country differences and common shocks across years.
+**Declared ambition:** This analysis is **Causal**. It attempts to identify a treatment effect, not only describe an association.
+
+ This analysis uses a two-way fixed effects regression to remove time-invariant country differences and common shocks across years.
 
 ## 2. Data Description
 The sample is built from cleaned World Bank indicator data in Data.clean/.
