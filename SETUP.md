@@ -47,6 +47,45 @@ Check that the following files exist in `Data.clean/`:
 - `Malawi_cleaned.csv`
 - `Rwanda_cleaned.csv`
 - `Burkina_Faso_cleaned.csv`
+- `Mali_cleaned.csv`
+- `panel_fixed_effects_data.csv`
+
+### 6. Run the Primary Econometric Analysis (NEW!)
+
+The repository now includes a complete, reproducible primary analysis notebook:
+
+**Option A: View & Run the Analysis Notebook**
+```bash
+# With Jupyter installed (included in requirements.txt)
+jupyter notebook Analysis/Primary_Econometric_Analysis.ipynb
+```
+
+This notebook contains:
+- Declaration of causal vs. descriptive analysis
+- Econometric specification (two-way fixed effects model)
+- Identification strategy and assumptions
+- Regression results table
+- Interpretation of coefficients
+- Threats to inference (OVB, reverse causality, measurement error)
+- Reproducibility verification
+
+**Option B: Regenerate from Raw Data (Full Pipeline)**
+```bash
+# Step 1: Clean all country data (if not already done)
+python Scripts/06_clean_mali_data.py
+
+# Step 2: Build panel dataset and run regression
+python Scripts/08_fixed_effects_analysis.py
+
+# Step 3: Open and run the analysis notebook
+jupyter notebook Analysis/Primary_Econometric_Analysis.ipynb
+```
+
+**Expected Results:**
+- Main coefficient: Female enrollment effect on fertility ≈ **-0.0015** (not significant, p ≈ 0.948)
+- Sample size: **N = 70** country-year observations
+- Model fit: **R² = 0.951**
+- Conclusion: No statistically significant causal effect detected
 
 ## Troubleshooting
 
