@@ -48,6 +48,10 @@ Data-Evidence-in-Economics-Empirical-Project/
 │       └── 06_clean_mali_data.py                # Clean Mali data → Data.clean/mali_clean_data.csv
 │
 ├── 📈 Analysis & Results
+│   ├── Analysis/
+│   │   ├── EDA_Report.txt                # Exploratory data analysis report
+│   │   └── Primary_Econometric_Analysis.ipynb  # ⭐ PRIMARY ANALYSIS: Two-way fixed effects regression
+│   │
 │   └── Outputs/
 │       ├── figures/                      # Plots, visualizations, maps, comparative analysis
 │       └── tables/                       # Regression tables, summary statistics (4 countries)
@@ -238,21 +242,97 @@ python
 >>> exit()
 ```
 
-5. Project Status
+5. Primary Econometric Analysis
+
+### Analysis File
+
+**Main Analysis Notebook:** `Analysis/Primary_Econometric_Analysis.ipynb`
+
+This Jupyter notebook contains the complete end-to-end econometric analysis, including:
+
+1. **Declaration of Analysis Type:** CAUSAL (attempts to identify treatment effect)
+2. **Econometric Specification:** Two-Way Fixed Effects (TWFE) regression
+   - Model: `Fertility_Rate ~ Female_Secondary_Enrollment_Rate + Country FE + Year FE`
+   - Sample: 4 Sub-Saharan African countries, 2005-2023, N=70 observations
+   - Error structure: Clustered standard errors (by country)
+3. **Identification Strategy:** Within-country, between-year variation
+   - Assumes no remaining time-varying confounders after controlling for country and year effects
+   - Assumes no reverse causality (fertility does not affect enrollment in the same year)
+4. **Main Results:**
+   - **Coefficient:** -0.0015 (std. error = 0.023, p = 0.948, not significant)
+   - **Interpretation:** A 1 percentage-point increase in female secondary enrollment is associated with a -0.0015 decrease in fertility (not statistically significant)
+   - **Model fit:** R² = 0.951, N = 70
+5. **Threats to Inference:**
+   - Omitted variable bias from time-varying confounders (family planning, labor market opportunities, health)
+   - Potential reverse causality (fertility → enrollment)
+   - Measurement error in enrollment (proxy for education quality)
+   - Limited sample (4 countries only)
+6. **Conclusion:** No statistically significant causal effect detected in this sample and period
+
+### Running the Analysis
+
+**Option 1: Run in Jupyter (Interactive)**
+```bash
+# From project root
+jupyter notebook Analysis/Primary_Econometric_Analysis.ipynb
+```
+
+**Option 2: Reproduce from Raw Data (Full Pipeline)**
+```bash
+# 1. Set up environment
+python -m venv venv
+venv\Scripts\activate
+pip install -r requirements.txt
+
+# 2. Run data cleaning pipeline
+python Scripts/02_clean_wb_data.py
+python Scripts/02_extract_rwanda_burkina_data.py
+python Scripts/04_clean_rwanda_data.py
+python Scripts/05_clean_burkina_faso_data.py
+python Scripts/06_clean_mali_data.py
+
+# 3. Generate panel dataset and fixed effects model
+python Scripts/08_fixed_effects_analysis.py
+
+# 4. Run the analysis notebook
+jupyter notebook Analysis/Primary_Econometric_Analysis.ipynb
+```
+
+### Expected Output
+
+When you run the analysis notebook, you should see:
+- **Regression coefficient:** Female_Secondary_Enrollment_Rate ≈ -0.0015 (not sig., p ≈ 0.948)
+- **Regression table:** Professional presentation with coefficients, standard errors, N, R²
+- **Interpretation:** Discussion of direction, magnitude, and policy implications
+- **Threats section:** Analysis of OVB, reverse causality, measurement error, and selection bias
+
+### Reproducibility
+
+The analysis is fully reproducible:
+- ✅ All data is cleaned and stored in `Data.clean/`
+- ✅ All scripts are documented with inputs and outputs
+- ✅ Environment specified in `requirements.txt`
+- ✅ Notebook runs end-to-end on the clean data
+
+To verify reproducibility:
+1. Follow the "Full Pipeline" instructions above
+2. Run all cells in `Analysis/Primary_Econometric_Analysis.ipynb`
+3. Check that results match the regression table in **Section 5** of the notebook
+
+### Project Status (Updated)
 
 **Completed:**
 - ✅ World Bank data extracted for Malawi, Rwanda, Burkina Faso, and Mali
 - ✅ Data cleaning scripts for all four countries
 - ✅ Clean datasets ready for analysis in Data.clean/
-
-**In Progress:**
-- 📊 Comparative analysis of female enrollment and fertility trends
-- 📈 Regression models and statistical testing
+- ✅ Fixed effects regression analysis completed
+- ✅ PRIMARY ECONOMETRIC ANALYSIS NOTEBOOK with full causal inference framework
+- ✅ Specification, identification assumptions, and threats documented
 
 **To Do:**
 - Document research methodology in Docs/
 - Create visualization notebooks
-- Generate final regression tables and figures 
+- Generate additional robustness checks (e.g., alternative specifications, lagged models) 
 
 ---
 
