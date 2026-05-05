@@ -27,6 +27,12 @@ pip --version
 ### 3. Install Dependencies
 ```bash
 pip install -r requirements.txt
+
+# Install Jupyter for notebook support
+pip install jupyter ipykernel
+
+# Register the virtual environment as a Jupyter kernel
+python -m ipykernel install --user --name=project-env
 ```
 
 ### 4. Run the Data Processing Pipeline
@@ -60,6 +66,12 @@ The repository now includes a complete, reproducible primary analysis notebook:
 # With Jupyter installed (included in requirements.txt)
 jupyter notebook Analysis/Primary_Econometric_Analysis.ipynb
 ```
+
+**Important:** When the notebook opens in your browser:
+1. Click on the "Kernel" menu
+2. Select "Change kernel"  
+3. Choose "project-env" (the kernel we registered during setup)
+4. Run all cells in order
 
 This notebook contains:
 - Declaration of causal vs. descriptive analysis

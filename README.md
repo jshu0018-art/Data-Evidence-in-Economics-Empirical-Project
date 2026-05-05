@@ -36,7 +36,7 @@ Data-Evidence-in-Economics-Empirical-Project/
 │       ├── Malawi_cleaned.csv            # Long format: Country, Year, Indicator, Value
 │       ├── Rwanda_cleaned.csv
 │       ├── Burkina_Faso_cleaned.csv
-│       └── mali_clean_data.csv           # Mali data (cleaned)
+│       └── Mali_cleaned.csv              # Mali data (cleaned)
 │
 ├── 🔧 Processing Scripts
 │   └── Scripts/
@@ -45,7 +45,7 @@ Data-Evidence-in-Economics-Empirical-Project/
 │       ├── 02_extract_rwanda_burkina_data.py    # Extract Rwanda & Burkina ZIP files
 │       ├── 04_clean_rwanda_data.py              # Clean Rwanda data → Data.clean/Rwanda_cleaned.csv
 │       ├── 05_clean_burkina_faso_data.py        # Clean Burkina data → Data.clean/Burkina_Faso_cleaned.csv
-│       ├── 06_clean_mali_data.py                # Clean Mali data → Data.clean/mali_clean_data.csv
+│       ├── 06_clean_mali_data.py                # Clean Mali data → Data.clean/Mali_cleaned.csv
 │       ├── 08_fixed_effects_analysis.py         # Build panel and estimate two-way fixed effects model
 │       ├── 09_run_full_fixed_effects_pipeline.py# Run the full extraction, cleaning, and fixed effects workflow
 │       └── 10_fixed_effects_table.py            # Produce regression-table CSV and panel summary outputs
@@ -99,6 +99,14 @@ source venv/bin/activate
 
 # Install dependencies
 pip install -r requirements.txt
+
+# Install Jupyter and ipykernel for notebook support
+pip install jupyter ipykernel
+
+# Register the virtual environment as a Jupyter kernel
+python -m ipykernel install --user --name=project-env
+```
+pip install -r requirements.txt
 ```
 
 **Option 2: Manual installation**
@@ -109,7 +117,7 @@ pip install pandas>=2.0.0 wbgapi>=1.0.12 pyreadstat>=1.2.0 statsmodels>=0.14.0 m
 ### Verify Installation
 Run this command to verify all packages are installed:
 ```bash
-python -c "import pandas, wbgapi, statsmodels, matplotlib, seaborn; print('All packages installed successfully!')"
+python -c "import pandas, wbgapi, statsmodels, matplotlib, seaborn, jupyter; print('All packages installed successfully!')"
 ```
 
 3. Data Acquisition and Processing
@@ -132,6 +140,8 @@ World Bank Open Data - World Development Indicators
 | 5 | `06_clean_mali_data.py` | `Data.raw/*Mali*Data.csv` (optional) | `Data.clean/Mali_cleaned.csv` | Transform Mali data to long format (skips if raw Mali data unavailable) |
 | 6 | `08_fixed_effects_analysis.py` | Cleaned country panels | `Data.clean/panel_fixed_effects_data.csv`, `Outputs/tables/fixed_effects_results.txt` | Build merged panel and estimate two-way fixed effects model |
 | 7 | `10_fixed_effects_table.py` | Cleaned panel and country files | `Outputs/tables/fixed_effects_regression_table.csv`, `Outputs/tables/panel_summary.csv` | Produce regression table data and panel summary for reporting |
+
+**Note:** Cleaned datasets are already provided in `Data.clean/` for quick reproduction. You only need to run the data processing scripts if you want to regenerate them from raw data.
 
 ### Run the Complete Pipeline
 
@@ -222,6 +232,8 @@ For Demographic and Health Survey (DHS) micro-level survey data:
 | Empty output files | Data extraction failed | Re-run `02_extract_rwanda_burkina_data.py` |
 | Missing indicators | Raw data format changed | Check World Bank data structure hasn't changed |
 | Mali cleaning script exits | Mali raw data not in Data.raw/ | Use provided Mali_cleaned.csv or download from World Bank (see Mali Data section) |
+| `ModuleNotFoundError` in notebook | Jupyter kernel not set up | Run `python -m ipykernel install --user --name=project-env` and select "project-env" kernel |
+| Notebook cells don't execute | Wrong kernel selected | In notebook: Kernel → Change kernel → project-env |
 
 ### Important Note on File Names
 
@@ -311,9 +323,15 @@ This Jupyter notebook contains the complete end-to-end econometric analysis, inc
 
 **Option 1: Run in Jupyter (Interactive)**
 ```bash
-# From project root
+# From project root (with virtual environment activated)
 jupyter notebook Analysis/Primary_Econometric_Analysis.ipynb
 ```
+
+**Important:** When the notebook opens in your browser:
+1. Click on the "Kernel" menu
+2. Select "Change kernel"
+3. Choose "project-env" (the kernel we registered during setup)
+4. Run all cells in order
 
 **Option 2: Reproduce from Raw Data (Full Pipeline)**
 ```bash
@@ -391,6 +409,12 @@ To verify reproducibility:
    python -u Scripts/02_clean_wb_data.py
    ```
 4. Check `requirements.txt` package versions match installed packages: `pip list`
+
+**For Jupyter Notebook Issues:**
+1. Ensure Jupyter and ipykernel are installed: `pip install jupyter ipykernel`
+2. Register the kernel: `python -m ipykernel install --user --name=project-env`
+3. In the notebook, select Kernel → Change kernel → project-env
+4. If cells don't run, check that the virtual environment is activated
 
 ---
 
