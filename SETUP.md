@@ -33,13 +33,14 @@ pip install -r requirements.txt
 The cleaned datasets already exist in `Data.clean/`, but to regenerate them from raw data:
 
 ```bash
-# Clean Malawi data
-python Scripts/02_clean_wb_data.py
-
-# Extract and clean Rwanda and Burkina Faso data
+# First, extract Rwanda and Burkina Faso data from ZIP archives
 python Scripts/02_extract_rwanda_burkina_data.py
-python Scripts/04_clean_rwanda_data.py
-python Scripts/05_clean_burkina_faso_data.py
+
+# Then clean each country's data
+python Scripts/02_clean_wb_data.py      # Malawi
+python Scripts/04_clean_rwanda_data.py  # Rwanda
+python Scripts/05_clean_burkina_faso_data.py  # Burkina Faso
+python Scripts/06_clean_mali_data.py    # Mali (optional)
 ```
 
 ### 5. Verify Outputs
