@@ -125,48 +125,57 @@ World Bank Open Data - World Development Indicators
 
 | Step | Script | Input | Output | Description |
 |------|--------|-------|--------|-------------|
-| 1 | `02_clean_wb_data.py` | `Data.raw/*Malawi*Data.csv` | `Data.clean/Malawi_cleaned.csv` | Transform Malawi data to long format |
-| 2 | `02_extract_rwanda_burkina_data.py` | `Data.raw/*.zip` (Rwanda + Burkina) | Extracted CSVs in `Data.raw/` | Extract ZIP files containing Rwanda & Burkina data |
-| 3 | `04_clean_rwanda_data.py` | `Data.raw/*Rwanda*Data.csv` | `Data.clean/Rwanda_cleaned.csv` | Transform Rwanda data to long format |
-| 4 | `05_clean_burkina_faso_data.py` | `Data.raw/*Burkina*Data.csv` | `Data.clean/Burkina_Faso_cleaned.csv` | Transform Burkina Faso data to long format |
-| 5 | `06_clean_mali_data.py` | `Data.raw/*Mali*Data.csv` | `Data.clean/mali_clean_data.csv` | Transform Mali data to long format |
-| 6 | `08_fixed_effects_analysis.py` | Cleaned country panels | `Data.clean/panel_fixed_effects_data.csv`, `Outputs/tables/fixed_effects_results.txt` | Build the merged panel and estimate the main two-way fixed effects model |
-| 7 | `09_run_full_fixed_effects_pipeline.py` | Raw/clean data files | Full extraction-cleaning-analysis workflow | Run the whole pipeline from extraction through fixed effects estimation |
-| 8 | `10_fixed_effects_table.py` | Cleaned panel and country files | `Outputs/tables/fixed_effects_regression_table.csv`, `Outputs/tables/panel_summary.csv` | Produce the regression table data and panel summary for reporting |
+| 1 | `02_extract_rwanda_burkina_data.py` | `Data.raw/*.zip` (Rwanda + Burkina) | Extracted CSVs in `Data.raw/` | Extract ZIP files containing Rwanda & Burkina World Bank data |
+| 2 | `02_clean_wb_data.py` | `Data.raw/b43612c8-..._Data.csv` | `Data.clean/Malawi_cleaned.csv` | Transform Malawi data to long format |
+| 3 | `04_clean_rwanda_data.py` | `Data.raw/9ec8500a-..._Data.csv` | `Data.clean/Rwanda_cleaned.csv` | Transform Rwanda data to long format |
+| 4 | `05_clean_burkina_faso_data.py` | `Data.raw/6ad77ab6-..._Data.csv` | `Data.clean/Burkina_Faso_cleaned.csv` | Transform Burkina Faso data to long format |
+| 5 | `06_clean_mali_data.py` | `Data.raw/*Mali*Data.csv` (optional) | `Data.clean/Mali_cleaned.csv` | Transform Mali data to long format (skips if raw Mali data unavailable) |
+| 6 | `08_fixed_effects_analysis.py` | Cleaned country panels | `Data.clean/panel_fixed_effects_data.csv`, `Outputs/tables/fixed_effects_results.txt` | Build merged panel and estimate two-way fixed effects model |
+| 7 | `10_fixed_effects_table.py` | Cleaned panel and country files | `Outputs/tables/fixed_effects_regression_table.csv`, `Outputs/tables/panel_summary.csv` | Produce regression table data and panel summary for reporting |
 
 ### Run the Complete Pipeline
 
-On first setup, run all scripts in order:
-```bash
-# Step 1: Clean Malawi
-python Scripts/02_clean_wb_data.py
+To reproduce the full analysis from raw data to results, run the scripts in this order:
 
-# Step 2: Extract Rwanda & Burkina ZIP files
+```bash
+# Step 0: Extract Rwanda and Burkina Faso data from ZIP archives
 python Scripts/02_extract_rwanda_burkina_data.py
 
-# Step 3: Clean Rwanda
+# Step 1: Clean Malawi data
+python Scripts/02_clean_wb_data.py
+
+# Step 2: Clean Rwanda data
 python Scripts/04_clean_rwanda_data.py
 
-# Step 4: Clean Burkina Faso
+# Step 3: Clean Burkina Faso data
 python Scripts/05_clean_burkina_faso_data.py
 
-# Step 5: Clean Mali
+# Step 4: Clean Mali data (optional - skips if Mali raw data unavailable)
 python Scripts/06_clean_mali_data.py
 
-# Step 6: Estimate the main fixed effects model
+# Step 5: Build merged panel and estimate fixed effects model
 python Scripts/08_fixed_effects_analysis.py
 
-# Step 7: Run the full end-to-end fixed-effects pipeline
-python Scripts/09_run_full_fixed_effects_pipeline.py
-
-# Step 8: Build the regression table and panel summary outputs
+# Step 6: Generate regression table and panel summary
 python Scripts/10_fixed_effects_table.py
 
-# Verify all output files exist
-ls Data.clean/
-ls Outputs/tables/
-# Should show: panel_fixed_effects_data.csv, fixed_effects_results.txt, fixed_effects_regression_table.csv, panel_summary.csv
+# Verify all output files were created
+echo "Checking Data.clean:"
+ls -lh Data.clean/*cleaned.csv Data.clean/panel_fixed_effects_data.csv
+
+echo "Checking Outputs/tables:"
+ls -lh Outputs/tables/
 ```
+
+**Expected output files:**
+- `Data.clean/Malawi_cleaned.csv`
+- `Data.clean/Rwanda_cleaned.csv`
+- `Data.clean/Burkina_Faso_cleaned.csv`
+- `Data.clean/Mali_cleaned.csv`
+- `Data.clean/panel_fixed_effects_data.csv` (merged panel, 82 observations)
+- `Outputs/tables/fixed_effects_results.txt` (regression output)
+- `Outputs/tables/fixed_effects_regression_table.csv` (regression table with 4 specifications)
+- `Outputs/tables/panel_summary.csv` (descriptive statistics)
 
 ### Data Format
 
@@ -212,6 +221,17 @@ For Demographic and Health Survey (DHS) micro-level survey data:
 | `FileNotFoundError: Data.raw/...` | Scripts not run from project root | Use `cd Data-Evidence-in...` to enter project directory |
 | Empty output files | Data extraction failed | Re-run `02_extract_rwanda_burkina_data.py` |
 | Missing indicators | Raw data format changed | Check World Bank data structure hasn't changed |
+| Mali cleaning script exits | Mali raw data not in Data.raw/ | Use provided Mali_cleaned.csv or download from World Bank (see Mali Data section) |
+
+### Important Note on File Names
+
+The corrected script outputs use consistent naming conventions:
+- `Malawi_cleaned.csv` (not `wb_cleaned.csv`)
+- `Rwanda_cleaned.csv` (not `rwanda_cleaned.csv`)
+- `Burkina_Faso_cleaned.csv` (not `burkina_faso_cleaned.csv`)
+- `Mali_cleaned.csv`
+
+These naming conventions match the documentation and ensure compatibility with downstream analysis scripts.
 
 4. How to Verify Your Setup
 

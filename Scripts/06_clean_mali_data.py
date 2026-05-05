@@ -1,30 +1,3 @@
-"""
-Script: 06_clean_mali_data.py
-Purpose: Clean and transform Mali World Bank data
-Author: Data-Evidence-in-Economics-Empirical-Project
-Date: 2026
-
-Description:
-    Reads raw World Bank data for Mali from Data.raw/
-    Filters for female secondary enrollment and fertility rates
-    Transforms wide format (years as columns) to long format (years as rows)
-    Handles missing values (represented as '..')
-    Outputs clean, analysis-ready CSV to Data.clean/
-
-Input:
-    Data.raw/*Mali*Data.csv
-
-Output:
-    Data.clean/mali_clean_data.csv (long format with columns: Country, Year, Indicator, Value)
-
-Dependencies:
-    - pandas>=2.0.0
-    - os (standard library)
-
-Usage:
-    python Scripts/06_clean_mali_data.py
-"""
-
 import pandas as pd
 import os
 
@@ -46,11 +19,23 @@ for candidate in raw_files:
         continue
 
 if raw_data_path is None:
-    print(f"Error: No Mali raw data file found matching pattern '{raw_data_pattern}'")
-    print("Available candidate files in Data.raw/:")
-    for f in raw_files:
-        print(f"  - {f}")
-    exit(1)
+    # Mali raw data may not be available - it can be obtained from the World Bank API
+    # For now, use pre-cleaned Mali data if it exists, or skip
+    if os.path.exists(clean_data_path):
+        print(f"Mali raw data not found in Data.raw/, but {clean_data_path} already exists.")
+        print("Skipping Mali data regeneration.")
+        exit(0)
+    else:
+        print(f"Error: No Mali raw data file found matching pattern '{raw_data_pattern}'")
+        print("To obtain Mali data:")
+        print("  1. Download from World Bank Open Data: https://data.worldbank.org/")
+        print("  2. Select indicators: SE.SEC.ENRR.FE and SP.DYN.TFRT.IN")
+        print("  3. Download for Mali (country code: MLI)")
+        print("  4. Place the CSV file in Data.raw/")
+        print("\nAvailable candidate files in Data.raw/:")
+        for f in raw_files:
+            print(f"  - {f}")
+        exit(1)
 
 print(f"Using Mali data file: {raw_data_path}")
 
@@ -97,6 +82,14 @@ df_clean = df_long[['Country Name', 'Country Code', 'Year', 'Indicator', 'Value'
 
 # Sort the data
 df_clean = df_clean.sort_values(['Country Name', 'Year', 'Indicator'])
+
+# Save to clean data folder
+df_clean.to_csv(clean_data_path, index=False)
+
+print(f"Cleaned data saved to {clean_data_path}")
+print(f"Shape: {df_clean.shape}")
+print(df_clean.head(10))
+
 
 # Save to clean data folder
 df_clean.to_csv(clean_data_path, index=False)
