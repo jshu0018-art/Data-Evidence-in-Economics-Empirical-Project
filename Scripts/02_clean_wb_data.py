@@ -3,7 +3,7 @@ import os
 
 # Define paths
 raw_data_path = 'Data.raw/b43612c8-b13c-4b4e-89d2-2a8303a6a69e_Data.csv'
-clean_data_path = 'Data.clean/wb_cleaned.csv'
+clean_data_path = 'Data.clean/Malawi_cleaned.csv'
 
 # Ensure Data.clean directory exists
 os.makedirs('Data.clean', exist_ok=True)
