@@ -90,7 +90,10 @@ python Scripts/06_clean_mali_data.py
 # Step 2: Build panel dataset and run regression
 python Scripts/08_fixed_effects_analysis.py
 
-# Step 3: Open and run the analysis notebook
+# Step 3: Run robustness checks
+python Scripts/11_robustness_analysis.py
+
+# Step 4: Open and run the analysis notebook
 jupyter notebook Analysis/Primary_Econometric_Analysis.ipynb
 ```
 

@@ -21,14 +21,7 @@ SCRIPT_ORDER = [
     SCRIPTS_DIR / "05_clean_burkina_faso_data.py",
     SCRIPTS_DIR / "06_clean_mali_data.py",
     SCRIPTS_DIR / "08_fixed_effects_analysis.py",
-]
-
-
-def run_script(script_path):
-    print(f"Running {script_path.name}...")
-    result = subprocess.run([sys.executable, str(script_path)], cwd=str(ROOT))
-    if result.returncode != 0:
-        raise SystemExit(f"Script failed: {script_path.name} (exit code {result.returncode})")
+        SCRIPTS_DIR / "11_robustness_analysis.py",
     print(f"Completed {script_path.name}\n")
 
 

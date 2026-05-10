@@ -53,13 +53,15 @@ Data-Evidence-in-Economics-Empirical-Project/
 ├── 📈 Analysis & Results
 │   ├── Analysis/
 │   │   ├── EDA_Report.txt                # Exploratory data analysis report
-│   │   └── Primary_Econometric_Analysis.ipynb  # ⭐ PRIMARY ANALYSIS: Two-way fixed effects regression
+│   │   ├── Primary_Econometric_Analysis.ipynb  # ⭐ PRIMARY ANALYSIS: Two-way fixed effects regression
+│   │   └── Robustness_Analysis.ipynb        # Robustness checks and sensitivity analysis
 │   │
 │   └── Outputs/
 │       ├── figures/                      # Plots, visualizations, maps, comparative analysis
 │       └── tables/                       # Regression tables, summary statistics (4 countries)
 │           ├── fixed_effects_results.txt  # Text summary of model output for the main specification
-│           └── fixed_effects_regression_table.csv # Regression table summary for the notebook results
+│           ├── fixed_effects_regression_table.csv # Regression table summary for the notebook results
+│           └── robustness_analysis_table.csv # Robustness checks summary
 │
 ├── 📚 Documentation
 │   └── Docs/
@@ -106,9 +108,6 @@ pip install jupyter ipykernel
 # Register the virtual environment as a Jupyter kernel
 python -m ipykernel install --user --name=project-env
 ```
-pip install -r requirements.txt
-```
-
 **Option 2: Manual installation**
 ```bash
 pip install pandas>=2.0.0 wbgapi>=1.0.12 pyreadstat>=1.2.0 statsmodels>=0.14.0 matplotlib>=3.8.0 seaborn>=0.13.0
@@ -140,6 +139,7 @@ World Bank Open Data - World Development Indicators
 | 5 | `06_clean_mali_data.py` | `Data.raw/*Mali*Data.csv` (optional) | `Data.clean/Mali_cleaned.csv` | Transform Mali data to long format (skips if raw Mali data unavailable) |
 | 6 | `08_fixed_effects_analysis.py` | Cleaned country panels | `Data.clean/panel_fixed_effects_data.csv`, `Outputs/tables/fixed_effects_results.txt` | Build merged panel and estimate two-way fixed effects model |
 | 7 | `10_fixed_effects_table.py` | Cleaned panel and country files | `Outputs/tables/fixed_effects_regression_table.csv`, `Outputs/tables/panel_summary.csv` | Produce regression table data and panel summary for reporting |
+| 8 | `11_robustness_analysis.py` | Cleaned panel and country files | `Outputs/tables/robustness_analysis_table.csv` | Run robustness checks and save the robustness table |
 
 **Note:** Cleaned datasets are already provided in `Data.clean/` for quick reproduction. You only need to run the data processing scripts if you want to regenerate them from raw data.
 
@@ -169,6 +169,9 @@ python Scripts/08_fixed_effects_analysis.py
 # Step 6: Generate regression table and panel summary
 python Scripts/10_fixed_effects_table.py
 
+# Step 7: Run robustness checks
+python Scripts/11_robustness_analysis.py
+
 # Verify all output files were created
 echo "Checking Data.clean:"
 ls -lh Data.clean/*cleaned.csv Data.clean/panel_fixed_effects_data.csv
@@ -185,6 +188,7 @@ ls -lh Outputs/tables/
 - `Data.clean/panel_fixed_effects_data.csv` (merged panel, 82 observations)
 - `Outputs/tables/fixed_effects_results.txt` (regression output)
 - `Outputs/tables/fixed_effects_regression_table.csv` (regression table with 4 specifications)
+- `Outputs/tables/robustness_analysis_table.csv` (robustness checks summary)
 - `Outputs/tables/panel_summary.csv` (descriptive statistics)
 
 ### Data Format

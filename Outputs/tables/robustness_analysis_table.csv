@@ -1,0 +1,8 @@
+Specification,N,Coefficient,Std_Error,p_value,R_squared,Note
+Main: TWFE (cluster),70,-0.0015,0.0231,0.948,0.951,Main country and year fixed effects estimate with clustered SEs.
+Country FE only,70,-0.0562,0.0076,<0.001,0.867,Alternative control set with country fixed effects only.
+Year FE only,70,-0.0572,0.0185,0.002,0.594,Alternative control set with year fixed effects only.
+Log Fertility (TWFE),70,-0.0004,0.0056,0.947,0.939,Alternative functional form using the log of fertility.
+No Mali,54,0.0124,0.0124,0.314,0.959,Alternative sample excluding Mali to test sample sensitivity.
+Future Enrollment Placebo,66,-0.0024,0.0138,0.862,0.954,Identification-relevant placebo test using next-year enrollment.
+Main: TWFE (HC1),70,-0.0015,0.0101,0.88,0.951,Alternative inference using heteroskedasticity-robust SEs instead of clustering.
