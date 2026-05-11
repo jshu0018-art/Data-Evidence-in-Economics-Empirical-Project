@@ -46,6 +46,7 @@ def build_robustness_table(panel):
             "Fertility_Rate ~ Female_Secondary_Enrollment_Rate + C(Country_Name) + C(Year)",
             panel,
             True,
+            "Fertility_Rate",
             "Main country and year fixed effects estimate with clustered SEs.",
         ),
         (
@@ -53,6 +54,7 @@ def build_robustness_table(panel):
             "Fertility_Rate ~ Female_Secondary_Enrollment_Rate + C(Country_Name)",
             panel,
             True,
+            "Fertility_Rate",
             "Alternative control set with country fixed effects only.",
         ),
         (
@@ -60,6 +62,7 @@ def build_robustness_table(panel):
             "Fertility_Rate ~ Female_Secondary_Enrollment_Rate + C(Year)",
             panel,
             True,
+            "Fertility_Rate",
             "Alternative control set with year fixed effects only.",
         ),
         (
@@ -67,6 +70,7 @@ def build_robustness_table(panel):
             "Log_Fertility_Rate ~ Female_Secondary_Enrollment_Rate + C(Country_Name) + C(Year)",
             panel,
             True,
+            "Log_Fertility_Rate",
             "Alternative functional form using the log of fertility.",
         ),
         (
@@ -74,6 +78,7 @@ def build_robustness_table(panel):
             "Fertility_Rate ~ Female_Secondary_Enrollment_Rate + C(Country_Name) + C(Year)",
             panel[panel["Country_Name"] != "Mali"],
             True,
+            "Fertility_Rate",
             "Alternative sample excluding Mali to test sample sensitivity.",
         ),
         (
@@ -81,6 +86,7 @@ def build_robustness_table(panel):
             "Fertility_Rate ~ Future_Enrollment_Rate + C(Country_Name) + C(Year)",
             panel.dropna(subset=["Future_Enrollment_Rate"]),
             True,
+            "Fertility_Rate",
             "Identification-relevant placebo test using next-year enrollment.",
         ),
         (
@@ -88,38 +94,43 @@ def build_robustness_table(panel):
             "Fertility_Rate ~ Female_Secondary_Enrollment_Rate + C(Country_Name) + C(Year)",
             panel,
             False,
+            "Fertility_Rate",
             "Alternative inference using heteroskedasticity-robust SEs instead of clustering.",
         ),
     ]
 
     rows = []
-    for label, formula, data, cluster, note in specifications:
+    for label, formula, data, cluster, outcome, note in specifications:
         model = estimate(formula, data, cluster=cluster)
+        coef_label = (
+            "Female_Secondary_Enrollment_Rate"
+            if "Female_Secondary_Enrollment_Rate" in model.params
+            else "Future_Enrollment_Rate"
+        )
         rows.append(
             {
                 "Specification": label,
+                "Outcome": outcome,
+                "Coefficient": model.params.get(coef_label, np.nan),
+                "Std_Error": model.bse.get(coef_label, np.nan),
+                "p_value": model.pvalues.get(coef_label, np.nan),
                 "N": int(model.nobs),
-                "Coefficient": model.params.get("Female_Secondary_Enrollment_Rate", np.nan)
-                if "Female_Secondary_Enrollment_Rate" in model.params
-                else model.params.get("Future_Enrollment_Rate", np.nan),
-                "Std_Error": model.bse.get("Female_Secondary_Enrollment_Rate", np.nan)
-                if "Female_Secondary_Enrollment_Rate" in model.bse
-                else model.bse.get("Future_Enrollment_Rate", np.nan),
-                "p_value": model.pvalues.get("Female_Secondary_Enrollment_Rate", np.nan)
-                if "Female_Secondary_Enrollment_Rate" in model.pvalues
-                else model.pvalues.get("Future_Enrollment_Rate", np.nan),
                 "R_squared": model.rsquared,
                 "Note": note,
             }
         )
 
-    table = pd.DataFrame(rows).set_index("Specification")
-    table["Coefficient"] = table["Coefficient"].round(4)
-    table["Std_Error"] = table["Std_Error"].round(4)
-    table["p_value"] = table["p_value"].apply(lambda x: "<0.001" if x < 0.001 else round(x, 3))
-    table["R_squared"] = table["R_squared"].round(3)
-    table.to_csv(OUTPUT_PATH)
-    return table
+    long_table = pd.DataFrame(rows).set_index("Specification")
+    long_table["Coefficient"] = long_table["Coefficient"].round(4)
+    long_table["Std_Error"] = long_table["Std_Error"].round(4)
+    long_table["p_value"] = long_table["p_value"].apply(lambda x: "<0.001" if x < 0.001 else round(x, 3))
+    long_table["R_squared"] = long_table["R_squared"].round(3)
+
+    wide_table = long_table.T.loc[
+        ["Outcome", "Coefficient", "Std_Error", "p_value", "N", "R_squared", "Note"]
+    ]
+    wide_table.to_csv(OUTPUT_PATH)
+    return wide_table
 
 
 def main():
