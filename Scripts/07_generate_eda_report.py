@@ -12,10 +12,10 @@ OUTPUT_DIR = Path('Outputs')
 
 # Load data
 files = {
-    'Burkina Faso': DATA_DIR / 'Burkina_Faso_cleaned.csv',
+    'Burkina Faso': DATA_DIR / 'burkina_faso_cleaned.csv',
     'Malawi': DATA_DIR / 'Malawi_cleaned.csv',
     'Mali': DATA_DIR / 'mali_clean_data.csv',
-    'Rwanda': DATA_DIR / 'Rwanda_cleaned.csv'
+    'Rwanda': DATA_DIR / 'rwanda_cleaned.csv'
 }
 
 dfs = []
@@ -84,8 +84,8 @@ report.append(f'\nFirst 5 Rows:')
 report.append(df_all.head().to_string())
 
 report.append(f'\n\nUnique Values Summary:')
-report.append(f'  Countries: {df_all["Country Name"].nunique()} ({", ".join(sorted(df_all["Country Name"].unique()))})')
-report.append(f'  Indicators: {df_all["Indicator"].nunique()} ({", ".join(sorted(df_all["Indicator"].unique()))})')
+report.append(f'  Countries: {df_all["Country Name"].nunique()} ({" , ".join(sorted(df_all["Country Name"].unique()))})')
+report.append(f'  Indicators: {df_all["Indicator"].nunique()} ({" , ".join(sorted(df_all["Indicator"].unique()))})')
 report.append(f'  Years: {df_all["Year"].min()}-{df_all["Year"].max()}')
 report.append(f'  Total observations: {len(df_all)}')
 report.append('')
