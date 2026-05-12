@@ -49,7 +49,14 @@ python Scripts/05_clean_burkina_faso_data.py  # Burkina Faso
 python Scripts/06_clean_mali_data.py    # Mali (optional)
 ```
 
-### 5. Verify Outputs
+### 5. Run analysis and robustness checks
+```bash
+python Scripts/08_fixed_effects_analysis.py
+python Scripts/10_fixed_effects_table.py
+python Scripts/11_robustness_analysis.py
+```
+
+### 6. Verify Outputs
 Check that the following files exist in `Data.clean/`:
 - `Malawi_cleaned.csv`
 - `Rwanda_cleaned.csv`
@@ -57,14 +64,19 @@ Check that the following files exist in `Data.clean/`:
 - `Mali_cleaned.csv`
 - `panel_fixed_effects_data.csv`
 
-### 6. Run the Primary Econometric Analysis (NEW!)
+### 7. Run the Primary Econometric Analysis (NEW!)
 
-The repository now includes a complete, reproducible primary analysis notebook:
+The repository now includes complete, reproducible notebooks for both the primary analysis and robustness checks.
 
-**Option A: View & Run the Analysis Notebook**
+**Option A: View & Run the Primary Analysis Notebook**
 ```bash
 # With Jupyter installed (included in requirements.txt)
 jupyter notebook Analysis/Primary_Econometric_Analysis.ipynb
+```
+
+**Option B: View & Run the Robustness Analysis Notebook**
+```bash
+jupyter notebook Analysis/Robustness_Analysis.ipynb
 ```
 
 **Important:** When the notebook opens in your browser:
