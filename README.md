@@ -175,6 +175,8 @@ python Scripts/11_robustness_analysis.py
 # Optional: open the robustness notebook
 jupyter notebook Analysis/Robustness_Analysis.ipynb
 
+Running the robustness notebook also generates the robustness summary table at `Outputs/tables/robustness_analysis_table.csv`.
+
 # Verify all output files were created
 echo "Checking Data.clean:"
 ls -lh Data.clean/*cleaned.csv Data.clean/panel_fixed_effects_data.csv

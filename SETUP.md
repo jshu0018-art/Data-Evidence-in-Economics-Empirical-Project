@@ -64,6 +64,9 @@ Check that the following files exist in `Data.clean/`:
 - `Mali_cleaned.csv`
 - `panel_fixed_effects_data.csv`
 
+Check that the robustness output exists in `Outputs/tables/`:
+- `robustness_analysis_table.csv`
+
 ### 7. Run the Primary Econometric Analysis (NEW!)
 
 The repository now includes complete, reproducible notebooks for both the primary analysis and robustness checks.
