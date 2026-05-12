@@ -172,6 +172,9 @@ python Scripts/10_fixed_effects_table.py
 # Step 7: Run robustness checks
 python Scripts/11_robustness_analysis.py
 
+# Optional: open the robustness notebook
+jupyter notebook Analysis/Robustness_Analysis.ipynb
+
 # Verify all output files were created
 echo "Checking Data.clean:"
 ls -lh Data.clean/*cleaned.csv Data.clean/panel_fixed_effects_data.csv
@@ -451,5 +454,5 @@ To verify reproducibility:
 - Review script comments for technical details
 - Check the `/Docs` folder for additional documentation
 
-**Last Updated:** March 31, 2026  
+**Last Updated:** May 12, 2026  
 **Project Members:** Scott (35101652) & Jethro (34932267)
