@@ -6,15 +6,17 @@ import pandas as pd
 import numpy as np
 from pathlib import Path
 
-# Paths
-DATA_DIR = Path('Data.clean')
-OUTPUT_DIR = Path('Outputs')
+# Base directories relative to this script
+SCRIPT_DIR = Path(__file__).resolve().parent
+PROJECT_DIR = SCRIPT_DIR.parent
+DATA_DIR = PROJECT_DIR / 'Data.clean'
+OUTPUT_DIR = PROJECT_DIR / 'Outputs'
 
 # Load data
 files = {
     'Burkina Faso': DATA_DIR / 'Burkina_Faso_cleaned.csv',
     'Malawi': DATA_DIR / 'Malawi_cleaned.csv',
-    'Mali': DATA_DIR / 'mali_clean_data.csv',
+    'Mali': DATA_DIR / 'Mali_cleaned.csv',
     'Rwanda': DATA_DIR / 'Rwanda_cleaned.csv'
 }
 
@@ -36,7 +38,10 @@ wide_df = df_clean.pivot_table(
     aggfunc='first'
 ).reset_index()
 wide_df.columns.name = None
-wide_df.columns = wide_df.columns.str.replace(' ', '_')
+wide_df.columns = wide_df.columns.str.replace(' ', '_', regex=False)
+
+# Ensure output directory exists
+OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
 
 # Build report
 report = []
