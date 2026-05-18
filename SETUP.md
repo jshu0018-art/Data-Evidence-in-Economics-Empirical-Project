@@ -54,6 +54,7 @@ python Scripts/06_clean_mali_data.py    # Mali (optional)
 python Scripts/08_fixed_effects_analysis.py
 python Scripts/10_fixed_effects_table.py
 python Scripts/11_robustness_analysis.py
+python Scripts/12_coefficient_plot.py
 ```
 
 ### 6. Verify Outputs
@@ -64,8 +65,11 @@ Check that the following files exist in `Data.clean/`:
 - `Mali_cleaned.csv`
 - `panel_fixed_effects_data.csv`
 
-Check that the robustness output exists in `Outputs/tables/`:
+Check that the analysis outputs exist in `Outputs/tables/`:
 - `robustness_analysis_table.csv`
+
+Check that the visualization exists in `Outputs/`:
+- `coefficient_plot_fertility_enrollment.png` (coefficient plot with 95% confidence intervals)
 
 ### 7. Run the Primary Econometric Analysis (NEW!)
 

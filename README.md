@@ -131,7 +131,7 @@ World Bank Open Data - World Development Indicators
 ### Complete Data Processing Workflow
 
 | Step | Script | Input | Output | Description |
-|------|--------|-------|--------|-------------|
+|--------|--------|-------|--------|----------------------------|
 | 1 | `02_extract_rwanda_burkina_data.py` | `Data.raw/*.zip` (Rwanda + Burkina) | Extracted CSVs in `Data.raw/` | Extract ZIP files containing Rwanda & Burkina World Bank data |
 | 2 | `02_clean_wb_data.py` | `Data.raw/b43612c8-..._Data.csv` | `Data.clean/Malawi_cleaned.csv` | Transform Malawi data to long format |
 | 3 | `04_clean_rwanda_data.py` | `Data.raw/9ec8500a-..._Data.csv` | `Data.clean/Rwanda_cleaned.csv` | Transform Rwanda data to long format |
@@ -140,6 +140,7 @@ World Bank Open Data - World Development Indicators
 | 6 | `08_fixed_effects_analysis.py` | Cleaned country panels | `Data.clean/panel_fixed_effects_data.csv`, `Outputs/tables/fixed_effects_results.txt` | Build merged panel and estimate two-way fixed effects model |
 | 7 | `10_fixed_effects_table.py` | Cleaned panel and country files | `Outputs/tables/fixed_effects_regression_table.csv`, `Outputs/tables/panel_summary.csv` | Produce regression table data and panel summary for reporting |
 | 8 | `11_robustness_analysis.py` | Cleaned panel and country files | `Outputs/tables/robustness_analysis_table.csv` | Run robustness checks and save the robustness table |
+| 9 | `12_coefficient_plot.py` | Cleaned panel from step 6 | `Outputs/coefficient_plot_fertility_enrollment.png` | Generate coefficient plot with 95% CIs across four model specifications |
 
 **Note:** Cleaned datasets are already provided in `Data.clean/` for quick reproduction. You only need to run the data processing scripts if you want to regenerate them from raw data.
 
@@ -172,6 +173,9 @@ python Scripts/10_fixed_effects_table.py
 # Step 7: Run robustness checks
 python Scripts/11_robustness_analysis.py
 
+# Step 8: Generate coefficient plot for robustness analysis
+python Scripts/12_coefficient_plot.py
+
 # Optional: open the robustness notebook
 jupyter notebook Analysis/Robustness_Analysis.ipynb
 
@@ -195,6 +199,7 @@ ls -lh Outputs/tables/
 - `Outputs/tables/fixed_effects_regression_table.csv` (regression table with 4 specifications)
 - `Outputs/tables/robustness_analysis_table.csv` (robustness checks summary)
 - `Outputs/tables/panel_summary.csv` (descriptive statistics)
+- `Outputs/coefficient_plot_fertility_enrollment.png` (coefficient plot with 95% CIs)
 
 ### Data Format
 
