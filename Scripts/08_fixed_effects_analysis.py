@@ -18,8 +18,8 @@ OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
 
 INPUT_FILES = [
     DATA_DIR / "Malawi_cleaned.csv",
-    DATA_DIR / "rwanda_cleaned.csv",
-    DATA_DIR / "burkina_faso_cleaned.csv",
+    DATA_DIR / "Rwanda_cleaned.csv",
+    DATA_DIR / "Burkina_Faso_cleaned.csv",
     DATA_DIR / "Mali_cleaned.csv",
 ]
 PANEL_PATH = DATA_DIR / "panel_fixed_effects_data.csv"

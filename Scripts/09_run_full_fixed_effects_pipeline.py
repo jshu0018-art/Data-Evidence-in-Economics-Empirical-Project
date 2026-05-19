@@ -5,6 +5,7 @@ This script executes the updated scripts in sequence:
 2. Clean Malawi, Rwanda, Burkina Faso, and Mali data
 3. Build the panel dataset and estimate the fixed effects model
 4. Generate regression tables and robustness checks
+5. Produce the coefficient stability plot used for robustness reporting
 """
 
 import subprocess
@@ -23,6 +24,7 @@ SCRIPT_ORDER = [
     SCRIPTS_DIR / "08_fixed_effects_analysis.py",
     SCRIPTS_DIR / "10_fixed_effects_table.py",
     SCRIPTS_DIR / "11_robustness_analysis.py",
+    SCRIPTS_DIR / "12_coefficient_plot.py",
 ]
 
 

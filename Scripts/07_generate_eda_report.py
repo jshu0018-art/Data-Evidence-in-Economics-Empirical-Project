@@ -14,9 +14,9 @@ OUTPUT_DIR = PROJECT_DIR / 'Outputs'
 
 # Load data
 files = {
-    'Burkina Faso': DATA_DIR / 'burkina_faso_cleaned.csv',
+    'Burkina Faso': DATA_DIR / 'Burkina_Faso_cleaned.csv',
     'Malawi': DATA_DIR / 'Malawi_cleaned.csv',
-    'Mali': DATA_DIR / 'mali_clean_data.csv',
+    'Mali': DATA_DIR / 'Mali_cleaned.csv',
     'Rwanda': DATA_DIR / 'Rwanda_cleaned.csv'
 }
 
@@ -74,7 +74,7 @@ Code: Import libraries and read raw data
 - Libraries: pandas, numpy, matplotlib, seaborn
 - Data source: 4 CSV files from Data.clean/ directory
 - Files loaded: Burkina_Faso_cleaned.csv, Malawi_cleaned.csv, 
-               mali_clean_data.csv, Rwanda_cleaned.csv
+               Mali_cleaned.csv, Rwanda_cleaned.csv
 """)
 report.append('')
 

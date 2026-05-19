@@ -201,6 +201,19 @@ ls -lh Outputs/tables/
 - `Outputs/tables/panel_summary.csv` (descriptive statistics)
 - `Outputs/coefficient_plot_fertility_enrollment.png` (coefficient plot with 95% CIs)
 
+### Reproducibility mapping
+The following scripts produce the tables and figures used in the analysis. Compare these outputs directly with the report or PDF to verify that the numbers match.
+
+| Report element | Output file | Producing script |
+|---|---|---|
+| Main two-way FE regression text output | `Outputs/tables/fixed_effects_results.txt` | `Scripts/08_fixed_effects_analysis.py` |
+| Main regression results table | `Outputs/tables/fixed_effects_regression_table.csv` | `Scripts/10_fixed_effects_table.py` |
+| Robustness results table | `Outputs/tables/robustness_analysis_table.csv` | `Scripts/11_robustness_analysis.py` |
+| Coefficient stability figure | `Outputs/coefficient_plot_fertility_enrollment.png` | `Scripts/12_coefficient_plot.py` |
+| Clean merged panel dataset used in analysis | `Data.clean/panel_fixed_effects_data.csv` | `Scripts/08_fixed_effects_analysis.py`, `Scripts/10_fixed_effects_table.py` |
+
+> If the report contains additional tables or figures from exploratory analysis, they can be generated from the `Analysis/` notebooks or the EDA script outputs under `Outputs/figures/`.
+
 ### Data Format
 
 All cleaned datasets follow the same **long format** structure:
